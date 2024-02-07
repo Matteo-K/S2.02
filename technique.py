@@ -2,6 +2,20 @@ import time
 import random
 
 def is_valid(queens):
+    """
+    vérifie si la liste de résultat est valide au problème
+
+    paramètre :
+    -----------
+    queens : list
+    liste des cordonnées de placement des reines
+
+    renvoie :
+    ---------
+    bool
+    True si la grille est valide au problème
+    False sinon
+    """
     for i in range(len(queens)):
         for j in range(i+1, len(queens)):
             if queens[i] == queens[j] or abs(queens[i] - queens[j]) == j - i:

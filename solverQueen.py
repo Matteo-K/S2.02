@@ -1,5 +1,4 @@
 import time
-import random
 import technique
 
 EXEC_MOYEN = 200
@@ -31,15 +30,16 @@ choix = None
 while choix != "Q":
     print("\n----- Resolution Problème des Reines -----")
     print(" - R : technique par aléatoire")
-    print(" - B : technique Backtracking")
+    print(" - I : technique d'incrémentation'")
     print(" - Q : Quitter")
     choix = input("Sélection technique ?").upper()
     if choix == "Q" :
         print("Merci")
     elif choix == "R":
         printStats(EXEC_MOYEN,"aléatoire",technique.solverRandom)
+    elif choix == "I":
+        printStats(EXEC_MOYEN,"Incrémentation",technique.forcing)
     elif choix == "B":
-        printStats(EXEC_MOYEN,"forcing",technique.forcing)
-        #afficheStatsBacktracking(EXEC_MOYEN)
+        printStats(EXEC_MOYEN,"Backtracking")
     else :
         print("entrer érronner")
