@@ -1,14 +1,16 @@
 N = 8
 
-[0, 0, 0, 0, 0, 0, 0, 0]
-[0, 0, 0, 0, 0, 0, 0, 0]
-[0, 0, 0, 0, 0, 0, 0, 0]
-[0, 0, 0, 0, 0, 0, 0, 0]
-[0, 0, 0, 1, 0, 0, 0, 0]
-[0, 0, 0, 0, 0, 0, 0, 0]
-[0, 0, 0, 0, 0, 0, 0, 0]
-[0, 0, 0, 0, 0, 0, 0, 0]
-morphes, av
+[0, 0, 0, 0, 4, 0, 0, 0]
+[1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 3, 0, 0]
+[0, 2, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 2, 0]
+[0, 0, 3, 0, 0, 0, 0, 0]
+[0, 0, 0,
+ 0, 0, 0, 0, 1]
+[0, 0, 0, 4, 0, 0, 0, 0]
+
+
 [1, 0, 0, 0, 0, 0, 0, 0]
 [0, 0, 0, 0, 0, 1, 0, 0]
 [0, 1, 0, 0, 0, 0, 0, 0]
@@ -61,32 +63,46 @@ def is_valid(queens: list) -> bool:
     """
     for i in range(len(queens)):
         for j in range(i+1, len(queens)):
-            if queens[i] == queens[j] or abs(queens[i] - queens[j]) == j - i:
+            if queens[i][0] == queens[j][0] or queens[i][1] == queens[j][1] or abs(queens[i][1] - queens[j][1]) == abs(queens[i][0] - queens[j][0]):
                 return False
     return True
 
 
 def main():
     affiche_echiquier(echiquier)
-    modif = False
-    i = 0
+    queens = []
+    print("donne la ligne")
+    x = int(input())
+    print("donne la colonne")
+    y = int(input())
+    queens.append([x, y])
+    queens.append([N-1-x, N-1-y])
     indice_ligne = 0
     indice_colonne = 0
     for indice_colonne in range(4):
         modif = False
         indice_ligne = 0
+
+        print(indice_colonne)
         while indice_ligne < N and modif == False:
-            echiquier[N-indice_ligne-1][N-indice_colonne-1] = 1
-            if possible(echiquier, indice_ligne, indice_ligne):
-                echiquier[indice_ligne][indice_colonne] = 1
+
+            queens.append([indice_ligne, indice_colonne])
+            queens.append([N-indice_ligne-1, N-indice_colonne-1])
+            if is_valid(queens):
                 modif = True
 
             else:
-                echiquier[N-indice_ligne-1][N-indice_colonne-1] = 0
+                queens = queens[:-2]
                 indice_ligne += 1
-        print("")
-        affiche_echiquier(echiquier)
-        print(indice_colonne)
+            print(queens)
+    for i in range(N):
 
+        a = queens[i][0]
+        b = queens[i][1]
+        echiquier[a][b] = 1
+
+
+print("")
+affiche_echiquier(echiquier)
 
 main()
