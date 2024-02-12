@@ -38,7 +38,7 @@ while choix != "Q":
     elif choix == "R":
         printStats(EXEC_MOYEN,"aléatoire",technique.solverRandom)
     elif choix == "I":
-        printStats(EXEC_MOYEN,"Incrémentation",technique.forcing)
+        printStats(EXEC_MOYEN,"Incrémentation",technique.BruteForce)
     elif choix == "B":
         printStats(EXEC_MOYEN,"Backtracking")
     else :

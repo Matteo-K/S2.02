@@ -53,7 +53,7 @@ def solverRandom(size):
         progress = False if is_valid(res) else True
     return res
 
-def forcing(size):
+def BruteForce(size):
     """
     Résolution du problème par brute force
     Complète le tableau de résultat par incrémentation par 1
