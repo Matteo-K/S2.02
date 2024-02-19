@@ -26,6 +26,8 @@ La fonction essaye de résoudre le problème tant qu'elle n'a pas trouver de ré
 Les temps varis beaucoup entre chaque taille différentes
 Plus la grille est grande, plus le temps de recherche est long.
 
+### Graph
+
 ## Marius
 
 On place les dames sur toutes les premières cases de l'échiquier

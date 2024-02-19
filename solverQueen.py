@@ -1,27 +1,31 @@
 import time
 import technique
+import tracemalloc
 
-EXEC_MOYEN = 200
+EXEC_MOYEN = 100
 
 def printStats(nbExect,nomTech,nomFonction):
     print("\nTechnique",nomTech,":")
     result = []
-    print("nb reines|    temps min    |    temps max    |  temps moyen    |")
+    print("nb reines|    temps min    |    temps max    |  temps moyen    |  memory       |")
     for n in range(4,12):
         timeAverate = 0
         min = n**n
         max = 0.0
         for times in range(nbExect):
+            tracemalloc.start()
             startTime = time.process_time()
             nomFonction(n)
             endTime = time.process_time()
+            memory = tracemalloc.get_traced_memory()
+            tracemalloc.stop()
             cpuTime = endTime - startTime
             if cpuTime < min:
                 min = cpuTime
             elif cpuTime > max:
                 max = cpuTime
             timeAverate += cpuTime
-        result = [n,min,max,timeAverate/nbExect]
+        result = [n,min,max,timeAverate/nbExect,memory]
         for elt in result:
             print("    ",f"{elt:.6f}" if type(elt)==float else elt,"  |",end=" ")
         print()

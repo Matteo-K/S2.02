@@ -86,3 +86,6 @@ def BruteForce(size):
                 res[i] = res[i] % size
     return res
 
+def b():
+    pass
+
