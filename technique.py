@@ -55,7 +55,7 @@ def solverRandom(size: int) -> list[int]:
         progress = False if is_valid(res) else True
     return res
 
-def forcing(size):
+def bruteForce(size):
     """
     Résolution du problème par brute force
     Complète le tableau de résultat par incrémentation par 1
@@ -85,3 +85,4 @@ def forcing(size):
                 res[i+1] += res[i]//size
                 res[i] = res[i] % size
     return res
+
