@@ -1,4 +1,5 @@
 # SAE2.02 - Exploration algorithmique
+
 ## Le tour de cavalier
 
 ### Disposition échiqier

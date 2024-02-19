@@ -1,6 +1,7 @@
 import random
 
-def is_valid(queens):
+
+def is_valid(queens: list[int]) -> bool:
     """
     vérifie si la liste de résultat est valide au problème
 
@@ -21,7 +22,8 @@ def is_valid(queens):
                 return False
     return True
 
-def solverRandom(size):
+
+def solverRandom(size: int) -> list[int]:
     """
     Résolution du problème par aléatoire
     Complète le tableau de résultat aléatoirement
@@ -46,13 +48,14 @@ def solverRandom(size):
         res = []
         compteur = size-1
         while compteur > -1:
-            id = random.randint(0,compteur)
+            id = random.randint(0, compteur)
             res.append(values.pop(id))
             compteur -= 1
         progress = False if is_valid(res) else True
     return res
 
-def forcing(size):
+
+def forcing(size: int) -> bool:
     """
     Résolution du problème par brute force
     Complète le tableau de résultat par incrémentation par 1
@@ -71,14 +74,14 @@ def forcing(size):
     """
     progress = True
     res = [0 for _ in range(size)]
-    #tant que le tableau n'est pas correct
+    # tant que le tableau n'est pas correct
     while progress:
         if is_valid(res):
             progress = False
-        else :
-            #incrémentation des valeurs
+        else:
+            # incrémentation des valeurs
             res[0] = res[0]+1
-            for i in range(0,size-1):
+            for i in range(0, size-1):
                 res[i+1] += res[i]//size
-                res[i] = res[i]%size
+                res[i] = res[i] % size
     return res
