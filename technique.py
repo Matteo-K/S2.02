@@ -6,6 +6,13 @@ def is_valid(queens: list[int]) -> bool:
     """
     vérifie si la liste de résultat est valide au problème
 
+    vérification des colonnes
+        - queens[i] == queen[j] : vérifie si deux reines sont sur la même colonne
+
+    vérification de la diagonale
+        - abs(queens[i] - queens[j]) vérifie si la différence verticale entre les reines 
+        - j - i : vérifie la différence horizontale
+
     paramètre :
     -----------
     queens : list
@@ -19,7 +26,7 @@ def is_valid(queens: list[int]) -> bool:
     """
     for i in range(len(queens)):
         for j in range(i+1, len(queens)):
-            if queens[i] == queens[j] or abs(queens[i] - queens[j]) == j - i:
+            if queens[i] == queens[j] or abs(queens[i] - queens[j]) == abs(j - i):
                 return False
     return True
 
@@ -53,9 +60,10 @@ def solverRandom(size: int) -> list[int]:
             res.append(values.pop(id))
             compteur -= 1
         progress = False if is_valid(res) else True
+    print(res)
     return res
 
-def BruteForce(size):
+def BruteForce(size : int) -> list:
     """
     Résolution du problème par brute force
     Complète le tableau de résultat par incrémentation par 1
@@ -86,6 +94,6 @@ def BruteForce(size):
                 res[i] = res[i] % size
     return res
 
-def b():
+def graph():
     pass
 

@@ -6,21 +6,67 @@ Une reine doit être unique dans sa ligne, sa colonne et sa diagonale
 
 ## Approches algorithmiques
 
+### La fonction is_valid()
+
+#### Expliquation
+
+La fonction vérifie si la liste de résultat est correcte autrement dit, si la liste les reines sont biens placé
+
+Le résultat est représenter de cette manière [2,0,3,1] ce qui représente les coordonnés de la ligne suivant la colonne en indice
+
+ce qui donne :
+
+    . Q . .
+    . . . Q
+    Q . . .
+    . . Q .
+
+Pour cela :
+
+La fonction parcours la liste de résultat comme un algorithme de recherche et compare deux valeurs entre elles
+Ainsi elle va regarder si les deux reines sélectionner sont sur la même ligne ou qu'elles sont sur la même diagonale
+
+#### Vérification en colonne :
+
+    if tabResult[Reine1] == tabResult[Reine2]
+
+Les reines sont obligatoirement sur des colonnes différentes car la colonne est représenter par l'indice de case. Ducoup, on vérifie si les reines sont sur la même ligne
+
+#### Vérification des diagonales :
+
+    if |tabRes[i] - tabRes[j]| == |j - i|
+
+Prenons l'exemple si dessous dans un cas avec deux reines sur un tableau d'ordre 4 :
+
+    . . . .
+    . . . Q
+    Q . . .
+    . . . .
+
+Coordonnée de la reine 1 : (1,3)
+Coordonnée de la reine 2 : (2,0)
+Donc i vaut 0 et j vaut 3
+
+    |3 - 0| == |1 - 2|
+    |3| == |-1|
+    3 != 1
+
+Les résultats sont différentes donc les reines sont sur des diagonales différentes
+
 ### Le brute Force
 
 Incrémente de 1 chaque indice du tableau de résultat
-quand le premier élément arrive à la limite n.
-On réalise un modulo de n et incrémente de 1 au secon élément
 
-Le tableau de resultat est sous forme d'une liste d'ordre n
-chaque valeur représente le numéro de ligne pour le numéro de colonne en indice
+Quand le premier élément arrive à la limite n.
+On réalise un modulo de n et incrémente de 1 au second élément et ainsi de suite
 
 ### Résolution par aléatoire
 
 Choisi aléatoirement le numéro de ligne du placement pour chaque colonne
+
 la valeur est choisi entre 0 et n. Et ne peut pas être représenter deux fois dans la liste.
-les valeur sont initailisé avec range(0,n)
-Puis les valeurs sont retirer de la liste range à chaque dès qu'elles sont sortit aléatoirement
+
+Les valeur sont initailisé avec range(0,n). Puis elles sont retirer de la liste range à chaque dès qu'elles sont sortit aléatoirement
 La fonction essaye de résoudre le problème tant qu'elle n'a pas trouver de résolution correcte
 
 Les temps varis beaucoup entre chaque taille différentes

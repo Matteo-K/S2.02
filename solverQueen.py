@@ -7,9 +7,10 @@ EXEC_MOYEN = 100
 def printStats(nbExect,nomTech,nomFonction):
     print("\nTechnique",nomTech,":")
     result = []
-    print("nb reines|    temps min    |    temps max    |  temps moyen    |  memory       |")
-    for n in range(4,12):
+    print("nb reines|    temps min    |    temps max    |  temps moyen    |      memory      |")
+    for n in range(4,13):
         timeAverate = 0
+        memoryAverate = 0.0
         min = n**n
         max = 0.0
         for times in range(nbExect):
@@ -17,7 +18,7 @@ def printStats(nbExect,nomTech,nomFonction):
             startTime = time.process_time()
             nomFonction(n)
             endTime = time.process_time()
-            memory = tracemalloc.get_traced_memory()
+            memoryAverate += float(tracemalloc.get_traced_memory()[0])
             tracemalloc.stop()
             cpuTime = endTime - startTime
             if cpuTime < min:
@@ -25,7 +26,7 @@ def printStats(nbExect,nomTech,nomFonction):
             elif cpuTime > max:
                 max = cpuTime
             timeAverate += cpuTime
-        result = [n,min,max,timeAverate/nbExect,memory]
+        result = [n,min,max,timeAverate/nbExect,memoryAverate/nbExect]
         for elt in result:
             print("    ",f"{elt:.6f}" if type(elt)==float else elt,"  |",end=" ")
         print()
