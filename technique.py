@@ -60,7 +60,6 @@ def solverRandom(size: int) -> list[int]:
             res.append(values.pop(id))
             compteur -= 1
         progress = False if is_valid(res) else True
-    print(res)
     return res
 
 def BruteForce(size : int) -> list:

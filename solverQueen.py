@@ -8,7 +8,7 @@ def printStats(nbExect,nomTech,nomFonction):
     print("\nTechnique",nomTech,":")
     result = []
     print("nb reines|    temps min    |    temps max    |  temps moyen    |      memory      |")
-    for n in range(4,13):
+    for n in range(10,13):
         timeAverate = 0
         memoryAverate = 0.0
         min = n**n
