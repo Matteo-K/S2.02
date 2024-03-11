@@ -1,6 +1,7 @@
 from board import Board
 
-def solve(board: Board) -> bool:
+def solve(n: int) -> Board:
+    board = Board(n)
     """ Algorithme de backtracking: place board.n reines """
     isRowFree, isColumnFree = [[True for _ in range(board.n)] for _ in range(2)]
     # NE-SO : 0 NE, n-1 SO
@@ -52,4 +53,8 @@ def solve(board: Board) -> bool:
         # move on to next cell
         return backtracking_rec(tileNo + 1)
 
-    return backtracking_rec(0)
+    assert backtracking_rec(0)
+    return board
+
+def toBoard(n: int, solution: Board) -> Board:
+    return solution
