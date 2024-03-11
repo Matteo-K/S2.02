@@ -18,7 +18,7 @@ def printStats(nbExect,nomTech,nomFonction):
             startTime = time.process_time()
             nomFonction(n)
             endTime = time.process_time()
-            memoryAverate += float(tracemalloc.get_traced_memory()[0])
+            memoryAverate += float(tracemalloc.get_traced_memory()[1])
             tracemalloc.stop()
             cpuTime = endTime - startTime
             if cpuTime < min:

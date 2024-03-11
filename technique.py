@@ -46,7 +46,7 @@ def solverRandom(size: int) -> list[int]:
     renvoie :
     ---------
     res : list
-    tableau des positions des reines pas colonnes
+    tableau des positions des reines par colonnes
     chaque valeur correspond au numéro de ligne
     l'indice correspond au numéro de colonne
     """
@@ -75,7 +75,7 @@ def BruteForce(size : int) -> list:
     renvoie :
     ---------
     res : list
-    tableau des positions des reines pas colonnes
+    tableau des positions des reines par colonnes
     chaque valeur correspond au numéro de ligne
     l'indice correspond au numéro de colonne
     """
@@ -93,6 +93,27 @@ def BruteForce(size : int) -> list:
                 res[i] = res[i] % size
     return res
 
-def graph():
-    pass
+def exchange(size:int) -> list:
+    """
+    Créer une liste de valeur de 0 à size, 
+    si la liste est bonne :
+        - renvoie le résultat correcte
+    sinon 
+        - prend un indice aléatoire
+        - échange les valeurs entre l'indice et l'indice au-dessus
 
+    paramètre :
+    -----------
+    size : int
+    nombre de reine
+
+    renvoie :
+    ---------
+    res : list
+    tableau des positions des reines par colonnes
+    """
+    res = [i for i in range(size)]
+    while not is_valid(res):
+        index = random.randint(0,size-1)
+        res[index],res[(index+1)%size] = res[(index+1)%size],res[index]
+    return res

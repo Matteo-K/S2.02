@@ -115,7 +115,10 @@ Technique incrémentation :
 |     6     | 0.000000  | 0.078125  |      0.032344            |
 |     7     | 0.046875  | 0.187500  |      0.128438            |
 |     8     | 2.640625  | 5.500000  |      4.425000            |
+
 ### Mémoire
+
+#### a vérifier
 
  nb Reine | Backtracking | aléatoire | Incrémentation |
  :------: | :----------: | :-------: | :------------: |
