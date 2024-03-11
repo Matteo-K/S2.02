@@ -8,7 +8,8 @@ def printStats(nbExect,nomTech,nomFonction):
     print("\nTechnique",nomTech,":")
     result = []
     print("nb reines|    temps min    |    temps max    |  temps moyen    |      memory      |")
-    for n in range(10,13):
+    print(":--------|:----------------|:----------------|:----------------|:-----------------|")
+    for n in range(4,13):
         timeAverate = 0
         memoryAverate = 0.0
         min = n**n
@@ -18,7 +19,7 @@ def printStats(nbExect,nomTech,nomFonction):
             startTime = time.process_time()
             nomFonction(n)
             endTime = time.process_time()
-            memoryAverate += float(tracemalloc.get_traced_memory()[0])
+            memoryAverate += float(tracemalloc.get_traced_memory()[1])
             tracemalloc.stop()
             cpuTime = endTime - startTime
             if cpuTime < min:
@@ -35,7 +36,8 @@ choix = None
 while choix != "Q":
     print("\n----- Resolution Problème des Reines -----")
     print(" - R : technique par aléatoire")
-    print(" - I : technique d'incrémentation'")
+    print(" - I : technique d'incrémentation")
+    print(" - EX : technique d'échange")
     print(" - Q : Quitter")
     choix = input("Sélection technique ?").upper()
     if choix == "Q" :
@@ -44,6 +46,8 @@ while choix != "Q":
         printStats(EXEC_MOYEN,"aléatoire",technique.solverRandom)
     elif choix == "I":
         printStats(EXEC_MOYEN,"Incrémentation",technique.BruteForce)
+    elif choix == "EX":
+        printStats(EXEC_MOYEN,"échange",technique.exchange)
     elif choix == "B":
         printStats(EXEC_MOYEN,"Backtracking")
     else :

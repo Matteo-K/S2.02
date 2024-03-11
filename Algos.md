@@ -62,7 +62,7 @@ On réalise un modulo de n et incrémente de 1 au second élément et ainsi de s
 
 ### Résolution par aléatoire
 
-Choisi aléatoirement le numéro de ligne du placement pour chaque colonne
+Choisi aléatoirement le numéro de ligne du placement pour chaque colonne.
 
 la valeur est choisi entre 0 et n. Et ne peut pas être représenter deux fois dans la liste.
 
@@ -72,7 +72,13 @@ La fonction essaye de résoudre le problème tant qu'elle n'a pas trouver de ré
 Les temps varis beaucoup entre chaque taille différentes
 Plus la grille est grande, plus le temps de recherche est long.
 
-### Graph
+### échange
+
+créer un tableau de résultat de 1 à n. 
+
+vérifie si le tableau est correcte
+
+sinon, on inverse un indice aléatoire avec son indice supérieur
 
 ## Marius
 
@@ -115,7 +121,22 @@ Technique incrémentation :
 |     6     | 0.000000  | 0.078125  |      0.032344            |
 |     7     | 0.046875  | 0.187500  |      0.128438            |
 |     8     | 2.640625  | 5.500000  |      4.425000            |
+
+|nb reines|    temps min    |    temps max    |  temps moyen    |
+|:--------|:----------------|:----------------|:----------------|
+|     4   |      0.000000   |      0.000000   |      0.000000   |
+|     5   |      0.000000   |      0.000000   |      0.000000   |
+|     6   |      0.000000   |      0.015625   |      0.000469   |
+|     7   |      0.000000   |      0.015625   |      0.000156   | 
+|     8   |      0.000000   |      0.015625   |      0.001250   | 
+|     9   |      0.000000   |      0.031250   |      0.003438   |
+|     10  |      0.000000   |      0.109375   |      0.013594   |
+|     11  |      0.000000   |      0.187500   |      0.020469   |
+|     12  |      0.000000   |      0.500000   |      0.089375   |
+
 ### Mémoire
+
+#### a vérifier
 
  nb Reine | Backtracking | aléatoire | Incrémentation |
  :------: | :----------: | :-------: | :------------: |
