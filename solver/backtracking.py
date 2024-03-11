@@ -1,6 +1,6 @@
 from board import Board
 
-def backtracking(board: Board) -> bool:
+def solve(board: Board) -> bool:
     """ Algorithme de backtracking: place board.n reines """
     isRowFree, isColumnFree = [[True for _ in range(board.n)] for _ in range(2)]
     # NE-SO : 0 NE, n-1 SO
@@ -53,11 +53,3 @@ def backtracking(board: Board) -> bool:
         return backtracking_rec(tileNo + 1)
 
     return backtracking_rec(0)
-
-
-if __name__ == '__main__':
-    # True indique que la case est libre
-    board = Board(8)
-    print(backtracking(board))
-    # Afficher la solution
-    print(board)

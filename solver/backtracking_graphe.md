@@ -16,7 +16,7 @@ Il s'agit d'un parcours dans un graphe implicite (<https://en.wikipedia.org/wiki
 
 ---
 
-Cela signifie que les sommets du graphes sont des vecteurs de 8 2-uples représentant les coordonnées (ligne, colonne) de chaque reine.
+Cela signifie que les sommets du graphes sont des vecteurs de 8 lignes où placer chaque reine.
 
 Les arrêtes représented l'ajout d'une reine à une ligne et une colonne.
 
@@ -26,15 +26,7 @@ L'objectif est de trouver toutes les solutions.
 
 ```mermaid
 flowchart LR
-    start["()"]
-    0["(0)"]
-    1["(1)"]
-    2["(2)"]
-    3["(3)"]
-    4["(4)"]
-    5["(5)"]
-    6["(6)"]
-    7["(7)"]
+    start[" "]
     start --> 0
     start --> 1
     start --> 2
@@ -47,8 +39,59 @@ flowchart LR
 
 ## Contraintes de validité des numéros de ligne
 
-$\forall l, c \in \N² \cap {[0;8[}^2$ souhaitant être ajouté au vecteur solution $S$,
+Entrée :
+
+- `c` : numéro de colonne en cours de traitement
+- `S` : le vecteur des lignes
+- `g` : la matrice de booléens représentant la grille (vrai si libre)
+
+$\forall l \in \N \cap [0;8[$ souhaitant être ajouté au vecteur solution $S$,
 
 - Ligne libre : $l \notin S$
-- Colonne libre : $c \notin S$
-- Diagonal Nord-Est Sud-Ouest : 
+- Diagonale NE SO : $g_{i,\ j}$ pour tous $i,\ j$ de $d_{NE\_SO}(l, c)$ à $N$
+- Diagonale SE NO : $g_{i,\ j}$ pour tous $i,\ j$ de $d_{SE\_NO}(l, c)$ à $0$
+
+## scratch
+
+comment itérer sur les cases formant la NE_SO?
+
+$$d_{NE\_SO}(l, c) \to \begin{align*}
+a &= l + c\\
+d_l &= min(a, N)\\
+d_c &= a - l_d\\
+\end{align*}$$
+
+parcours : $d_l+i$, $c_l+j$
+
+pour SE_NO:
+
+$$d_{SE\_NO}(l, c) \to \begin{align*}
+a &= l - c\\
+d_l &= N - max(0, a)\\
+d_c &= N - max(0, -a)
+\end{align*}$$
+
+parcours : $d_l-i$, $c_l-j$
+
+### diagonals 2
+
+so this doesnt seem to work:
+
+coords|ne_so|se_no
+-|-|-
+0,0|0,0|3,3
+0,1|0,1|2,3
+0,2|0,2|1,3
+0,3|0,3|0,3
+1,0||
+1,1||
+1,2||
+1,3||
+2,0||
+2,1||
+2,2||
+2,3||
+3,0||
+3,1||
+3,2||
+3,3||
