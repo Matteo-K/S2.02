@@ -35,7 +35,7 @@ class BacktrackingGraphe(Solver):
 
             # NE SO
             dr, dc = diag_ne_so(r, c)
-            while dr < n and dc > 0:
+            while dr < n and dc >= 0:
                 if in_solution(solution, dr, dc):
                     return False
                 dr += 1
@@ -60,7 +60,7 @@ class BacktrackingGraphe(Solver):
             validRows = [r for r in range(n) if can_place_at(
                 partialSolution, r, column)]
             for validRow in validRows:
-                partialSolution += [validRow]
+                partialSolution.append(validRow)
                 if backtrack(partialSolution):
                     return True
                 else:
@@ -69,7 +69,7 @@ class BacktrackingGraphe(Solver):
             return False
 
         solution = []
-        # we must always find a solution
+
         if backtrack(solution):
             return solution
         else:

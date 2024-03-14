@@ -44,7 +44,7 @@ class Backtracking(Solver):
                 setPossible(row, col, False)
                 nbQueensRemaining -= 1
 
-                # move on to the next cell: recursive call to see if the queen positions is good afterward
+                # move on to the next cell: recursive call to see if the queen positions is good afterwards
                 if (backtracking_rec(tileNo + 1)):
                     # the queen position is good, place it here
                     board[row, col] = False
