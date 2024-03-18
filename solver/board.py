@@ -9,7 +9,7 @@ class Board:
 
     def __getitem__(self, index: tuple[int, int]) -> bool:
         return self._board[index[0]][index[1]]
-        
+
     def __setitem__(self, index: tuple[int, int], value: bool):
         self._board[index[0]][index[1]] = value
 

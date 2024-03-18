@@ -62,10 +62,11 @@ def solverRandom(size: int) -> list[int]:
         progress = False if is_valid(res) else True
     return res
 
-def BruteForce(size : int) -> list:
+
+def BruteForce(size: int) -> list:
     """
     Résolution du problème par brute force
-    Complète le tableau de résultat par incrémentation par 1
+    Complète le tableau de résultat par incrémentation de 1
 
     paramètre :
     -----------
@@ -93,7 +94,8 @@ def BruteForce(size : int) -> list:
                 res[i] = res[i] % size
     return res
 
-def exchange(size:int) -> list:
+
+def exchange(size: int) -> list:
     """
     Créer une liste de valeur de 0 à size, 
     si la liste est bonne :
@@ -114,6 +116,34 @@ def exchange(size:int) -> list:
     """
     res = [i for i in range(size)]
     while not is_valid(res):
-        index = random.randint(0,size-1)
-        res[index],res[(index+1)%size] = res[(index+1)%size],res[index]
+        index = random.randint(0, size-1)
+        res[index], res[(index+1) % size] = res[(index+1) % size], res[index]
     return res
+
+
+def ping_pong (size:int) ->list:
+    """
+    Créer une liste de 0 de taille size, 
+    si la liste est bonne :
+        - renvoie le résultat correcte
+    sinon 
+        - prend un indice aléatoire
+        - Complète le tableau de résultat par incrémentation de 1
+
+    paramètre :
+    -----------
+    size : int
+    nombre de reine
+
+    renvoie :
+    ---------
+    res : list
+    tableau des positions des reines par colonnes
+    """
+    res = [0 for _ in range(size)]
+    while not is_valid(res):
+        index = random.randint(0, size-1)
+        res[index] = (res[index]+1)%size
+    return res
+
+print(ping_pong(8))
