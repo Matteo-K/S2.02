@@ -66,7 +66,7 @@ def solverRandom(size: int) -> list[int]:
 def BruteForce(size: int) -> list:
     """
     Résolution du problème par brute force
-    Complète le tableau de résultat par incrémentation par 1
+    Complète le tableau de résultat par incrémentation de 1
 
     paramètre :
     -----------
@@ -119,3 +119,31 @@ def exchange(size: int) -> list:
         index = random.randint(0, size-1)
         res[index], res[(index+1) % size] = res[(index+1) % size], res[index]
     return res
+
+
+def ping_pong (size:int) ->list:
+    """
+    Créer une liste de 0 de taille size, 
+    si la liste est bonne :
+        - renvoie le résultat correcte
+    sinon 
+        - prend un indice aléatoire
+        - Complète le tableau de résultat par incrémentation de 1
+
+    paramètre :
+    -----------
+    size : int
+    nombre de reine
+
+    renvoie :
+    ---------
+    res : list
+    tableau des positions des reines par colonnes
+    """
+    res = [0 for _ in range(size)]
+    while not is_valid(res):
+        index = random.randint(0, size-1)
+        res[index] = (res[index]+1)%size
+    return res
+
+print(ping_pong(8))
