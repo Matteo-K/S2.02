@@ -95,3 +95,16 @@ coords|ne_so|se_no
 3,1||
 3,2||
 3,3||
+
+## possibleRows
+
+we need to implement the backtracking properly, so we need a way to rewind in the solving process.
+
+we proceed column by column and then row by row
+
+On s'aperçoit que toutes les lignes comme toutes les colonnes seront présentes exactement une fois dans la solution.
+
+disons que si il n'y a pas de ligne valide pour la colonne *c*,
+ça veut dire que notre début solution est incorrect et qu'on arrive dans un sans-issue dans l'arbre de décision.
+
+on doit donc faire marche arrière, cad repartir à la colonne précédente et prendre la ligne suivante.
