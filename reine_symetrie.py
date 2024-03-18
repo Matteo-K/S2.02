@@ -133,30 +133,33 @@ def main():
 
 def main2():
     affiche_echiquier(echiquier)
-    queens = []  # position des reines
+    queens = [0 for _ in range(N)]  # position des reines
 
     indice_ligne = 0
     indice_colonne = 0
     while not is_valid(queens) and len(queens) < N:
 
         indice_ligne = 0
-        while not is_valid(queens) and indice_ligne < N:
-            queens.append[indice_ligne][indice_colonne]
-            queens.append[N-1-indice_ligne][N-1-indice_colonne]
+        while not is_valid(queens) or indice_ligne < N:
+
+            queens[indice_colonne] = indice_ligne
+            queens[8-indice_colonne] = 8-indice_ligne
+
             if not is_valid(queens):
-                queens = queens[:-2]
+                queens[indice_colonne] = indice_ligne
+                queens[8-indice_colonne] = 8-indice_ligne
                 indice_ligne += 1
 
         if indice_ligne >= N:
             indice_colonne -= 1
         else:
             indice_colonne += 1
-
+    print(queens)
     for i in range(N):
 
-        a = queens[i][0]
-        b = queens[i][1]
-        echiquier[a][b] = 1
+        a = queens[i]
+
+        echiquier[i][a] = 1
 
 
 print("")
