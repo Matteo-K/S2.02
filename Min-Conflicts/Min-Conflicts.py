@@ -55,25 +55,34 @@ def place(indice, board):
             indiceMin.append(i)
     return choice(indiceMin)
 
-
+def valide(tableauConf, coordsReines):
+    res = True
+    taille = len(coordsReines)
+    i = 0
+    while (res)and(i<taille):
+        if tableauConf[coordsReines[i]][i] != 0:
+            res=False
+        i+=1
+    return res
 
 n=8
-
+fin=False
 board = [[0 for i in range(n)] for i in range(n)]
+listeR = [None for i in range(n)]
 
-# de 0 à 7
-listeR = [randint(0,7)]+[None for i in range(n-1)]
+while not fin:
+    #initialisation
+    listeR = [None for i in range(n)]
 
-
-print(listeR)
-
-
-#initialisation
-confBoard= conflicts(listeR)
-for i in range(1,8):
-    res = place(i, confBoard)
-    listeR[i]=res
     confBoard= conflicts(listeR)
+    for i in range(n):
+        res = place(i, confBoard)
+        listeR[i]=res
+        confBoard= conflicts(listeR)
+    
+    fin = valide(confBoard, listeR)
+
+
 print(listeR)
 afficher(confBoard)
 
