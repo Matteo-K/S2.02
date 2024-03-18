@@ -43,15 +43,25 @@ def is_valid(queens: list) -> bool:
     return True
 
 
+[
+    [],
+    [],
+    [],
+    []
+]
+
+
 def main():
     affiche_echiquier(echiquier)
-    queens = []
+    queens = []  # position des reines
+    # demande de poser une reine
     print("donne la ligne")
     x = int(input())
     print("donne la colonne")
     y = int(input())
     queens.append([x, y])
     queens.append([N-1-x, N-1-y])
+
     indice_ligne = 0
     indice_colonne = 0
     for indice_colonne in range(4):
