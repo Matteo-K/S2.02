@@ -1,3 +1,7 @@
+# "reine_symetrie" est une supposition que j'ai fait apres avoir remarqué qu'il y avait plusieurs solutions au problème des reines
+# j'ai donc essayé de faire un programme mais il n'a pas marché et j'ai remarqué qu'il y avait beaucoup de cas qui ne permettait pas de resoudre
+# le probleme (ex: quand on pose les reines successivement elles finnissent par se bloqpuen entre elles)
+
 N = 8
 
 
