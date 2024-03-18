@@ -117,3 +117,10 @@ def exchange(size:int) -> list:
         index = random.randint(0,size-1)
         res[index],res[(index+1)%size] = res[(index+1)%size],res[index]
     return res
+
+def pingpong(size:int):
+    res = [1 for _ in range(0,size)]
+    while not is_valid(res):
+        index = random.randint(0,size-1)
+        res[index] = (res[index]+1)%size
+    return res
