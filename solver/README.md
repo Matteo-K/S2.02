@@ -5,6 +5,7 @@
 `./main.py <N> <algorithme>`
 
 option|description
+-|-
 `-b`, `--benchmark`|Mesurer la performance (temps & mémoire) de l'algorithme au lieu de résoudre
 `-v`, `--verbose`|Afficher la sortie verbeuse
 `-h`, `--help`|Afficher l'aide
