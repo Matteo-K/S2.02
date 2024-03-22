@@ -46,7 +46,7 @@ class Random(SolverRowList):
 
         paramètre :
         -----------
-        size : int
+        size : intmin_conflicts
         nombre de reine
 
         renvoie :

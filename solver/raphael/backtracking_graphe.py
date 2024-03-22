@@ -1,5 +1,3 @@
-#!/bin/env python3
-
 from typing import Iterable, Callable, TypeVar, Optional
 from board import Board
 from solver import Solver

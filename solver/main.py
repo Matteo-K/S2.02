@@ -66,11 +66,7 @@ if __name__ == '__main__':
         'brute_force': ('matteo', 'BruteForce'),
         'echange': ('matteo', 'Exchange'),
         'random': ('matteo', 'Random'),
-    }
-
-    verbs = {
-        'solve': '',
-        'benchmark': '',
+        'min_conflicts': ('paolo.min_conflicts', 'MinConflicts'),
     }
 
     # Parse arguments
