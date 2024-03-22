@@ -18,4 +18,4 @@ Résoudre en $N=4$ avec le *backtracking*
 
 Mesurer la performance en $N=3$ avec le *brute_force*
 
-`./main.py 3 brute_force`
+`./main.py 3 brute_force -b`
