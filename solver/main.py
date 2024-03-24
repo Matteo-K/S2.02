@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/bin/env -S python3 -O
 
 from sys import stderr
 import tracemalloc
@@ -9,7 +9,8 @@ from importlib import import_module
 from solver import Solver
 from board import Board
 
-NB_BENCHMARKING_ITERATIONS=200
+NB_BENCHMARKING_ITERATIONS = 200
+
 
 def solve(n: int, solver: Solver):
     solution = solver.solve(n)
@@ -27,6 +28,7 @@ def benchmark(n: int, solver: Solver, verbose_output: bool):
 
     def fmt_float(x) -> str:
         return f'{float(x):.3f}'
+
     def fmt_int(x) -> str:
         return str(int(x))
 
@@ -58,6 +60,7 @@ def benchmark(n: int, solver: Solver, verbose_output: bool):
     for key, value in results.items():
         print(f'{key}: {value}')
 
+
 if __name__ == '__main__':
     # (solver module name, solver class name) by algorithm
     solvers = {
@@ -67,15 +70,21 @@ if __name__ == '__main__':
         'echange': ('matteo', 'Exchange'),
         'random': ('matteo', 'Random'),
         'min_conflicts': ('paolo.min_conflicts', 'MinConflicts'),
+        'mask': ('raphael.mask', 'Mask'),
+        'pingpong': ('marius', 'PingPong')
     }
 
     # Parse arguments
-    parser = argparse.ArgumentParser(description="Programme de test d'algorithmes de résolution du problème des N reines", epilog='S2.02')
+    parser = argparse.ArgumentParser(
+        description="Programme de test d'algorithmes de résolution du problème des N reines", epilog='S2.02')
 
     parser.add_argument('n', type=int, help='Constante N')
-    parser.add_argument('algorithm', type=str, help='Algorithme à utiliser', choices=solvers.keys())
-    parser.add_argument('-b', '--benchmark', action='store_true', help="Mesurer la performance de l'algorithme au lieu de résoudre")
-    parser.add_argument('-v', '--verbose', action='store_true', help="Afficher la sortie verbeuse")
+    parser.add_argument('algorithm', type=str,
+                        help='Algorithme à utiliser', choices=solvers.keys())
+    parser.add_argument('-b', '--benchmark', action='store_true',
+                        help="Mesurer la performance de l'algorithme au lieu de résoudre")
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        help="Afficher la sortie verbeuse")
 
     args = parser.parse_args()
 

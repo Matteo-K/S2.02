@@ -13,7 +13,7 @@ class BacktrackingGraphe(Solver):
     @staticmethod
     def solve(n: int) -> Optional[list[int]]:
         """ Cet algoritmhe de backtracking utilise un graphe implicite (prenant la forme d'un arbre de décision), et des contraintes pour parcourir cet arbre pour arriver une solution valide.
-        Retourne une solution sous la forme d'une liste de lignes"""
+        Retourne une solution sous la forme d'une liste de lignes."""
         def diag_ne_so(r: int, c: int) -> tuple[int, int]:
             a = r + c
             dc = min(a, n - 1)
@@ -55,8 +55,8 @@ class BacktrackingGraphe(Solver):
                 # the solution is complete
                 return partialSolution
 
-            validRows = [r for r in range(n) if can_place_at(
-                partialSolution, r, column)]
+            validRows = (r for r in range(n) if can_place_at(
+                partialSolution, r, column))
             for validRow in validRows:
                 partialSolution.append(validRow)
                 if backtrack(partialSolution):
