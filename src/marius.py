@@ -7,6 +7,7 @@ from typing import Optional
 from src.board import Board
 import random
 
+
 def is_valid(queens: list[int]) -> bool:
     """
     vérifie si la liste de résultat est valide au problème
@@ -35,11 +36,12 @@ def is_valid(queens: list[int]) -> bool:
                 return False
     return True
 
+
 class PingPong(Solver):
     @staticmethod
-    def solve(size:int) -> list[Optional[int]]:
+    def solve(n: int) -> list[Optional[int]]:
         """
-        Créer une liste de 0 de taille size, 
+        Créer une liste de 0 de taille n, 
         si la liste est bonne :
             - renvoie le résultat correcte
         sinon 
@@ -48,7 +50,7 @@ class PingPong(Solver):
 
         paramètre :
         -----------
-        size : int
+        n : int
         nombre de reine
 
         renvoie :
@@ -56,12 +58,12 @@ class PingPong(Solver):
         res : list
         tableau des positions des reines par colonnes
         """
-        res = [0 for _ in range(size)]
+        res = [0 for _ in range(n)]
         while not is_valid(res):
-            index = random.randint(0, size-1)
-            res[index] = (res[index]+1)%size
+            index = random.randint(0, n-1)
+            res[index] = (res[index]+1) % n
         return res
-    
+
     @staticmethod
     def toBoard(n: int, solution: list[int]) -> Board:
         board = Board(n)
@@ -69,4 +71,3 @@ class PingPong(Solver):
         for r, c in enumerate(solution):
             board[c, r] = False
         return board
-        

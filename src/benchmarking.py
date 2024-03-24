@@ -6,6 +6,8 @@ from typing import Optional, Iterable
 import re
 import time
 import tracemalloc
+from sys import stderr
+from math import log10
 
 _solvers = {
     'backtracking_graphe': ('src.raphael.backtracking_graphe', 'BacktrackingGraphe'),
@@ -21,15 +23,21 @@ _solvers = {
 
 ALGORITHMS = _solvers.keys()
 
+
 def match_algorithms(regex: str) -> Iterable[str]:
     return (algorithm for algorithm in ALGORITHMS if re.fullmatch(regex, algorithm) is not None)
 
-def retrieve_solver(algorithm: str) -> Optional[type]:
+def args_error(msg: str):
+    print('Error:', msg, file=stderr)
+    exit(1)
+
+def get_solver(algorithm: str) -> Optional[type]:
     module_name, class_name = _solvers[algorithm]
     return getattr(import_module(module_name), class_name)
 
-@dataclass
-class BenchmarkingResult:
+
+@dataclass(frozen=True)
+class BenchmarkResult:
     """ Result of a benchmarking """
     avg_time: float
     """ Average CPU time (ms) """
@@ -55,9 +63,11 @@ class BenchmarkingResult:
         return '\n'.join(f'{kv[0]}: {format(kv[1])}' for kv in self.__dict__.items())
 
 
-def benchmark(n: int, solver: type, verbose_output: bool, times: int) -> BenchmarkingResult:
+def benchmark(n: int, solver: type, verbose_output: bool, times: int) -> BenchmarkResult:
     durations: list[float] = []
     memories: list[int] = []
+
+    notime_padding = int(log10(times) + 1)
 
     for i in range(times):
         start_time = time.process_time()
@@ -71,9 +81,12 @@ def benchmark(n: int, solver: type, verbose_output: bool, times: int) -> Benchma
         durations.append(duration * 1000)
 
         if verbose_output:
-            print(f'{i+1}. {duration:.4f}ms, {memory}b', file=stderr)
+            print(f'\r{str(i+1).zfill(notime_padding)}/{times}', file=stderr, end='')
+    
+    if verbose_output:
+        print()
 
-    return BenchmarkingResult(
+    return BenchmarkResult(
         mean(durations),
         median(durations),
         min(durations),

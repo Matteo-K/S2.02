@@ -27,3 +27,5 @@ Mesurer la performance en $N=3$ avec le *brute_force* avec 100 exécutions
 ### Todo
 
 - Marius' techniques
+- autocompute execution count so expected time is less than X ms
+- add a way to list algorithms

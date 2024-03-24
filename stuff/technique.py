@@ -31,7 +31,7 @@ def is_valid(queens: list[int]) -> bool:
     return True
 
 
-def solverRandom(size: int) -> list[int]:
+def solverRandom(n: int) -> list[int]:
     """
     Résolution du problème par aléatoire
     Complète le tableau de résultat aléatoirement
@@ -40,7 +40,7 @@ def solverRandom(size: int) -> list[int]:
 
     paramètre :
     -----------
-    size : int
+    n : int
     nombre de reine
 
     renvoie :
@@ -52,9 +52,9 @@ def solverRandom(size: int) -> list[int]:
     """
     progress = True
     while progress:
-        values = list(range(size))
+        values = list(range(n))
         res = []
-        compteur = size-1
+        compteur = n-1
         while compteur > -1:
             id = random.randint(0, compteur)
             res.append(values.pop(id))
@@ -63,14 +63,14 @@ def solverRandom(size: int) -> list[int]:
     return res
 
 
-def BruteForce(size: int) -> list:
+def BruteForce(n: int) -> list:
     """
     Résolution du problème par brute force
     Complète le tableau de résultat par incrémentation de 1
 
     paramètre :
     -----------
-    size : int
+    n : int
     nombre de reine
 
     renvoie :
@@ -81,7 +81,7 @@ def BruteForce(size: int) -> list:
     l'indice correspond au numéro de colonne
     """
     progress = True
-    res = [0 for _ in range(size)]
+    res = [0 for _ in range(n)]
     # tant que le tableau n'est pas correct
     while progress:
         if is_valid(res):
@@ -89,15 +89,15 @@ def BruteForce(size: int) -> list:
         else:
             # incrémentation des valeurs
             res[0] = res[0]+1
-            for i in range(0, size-1):
-                res[i+1] += res[i]//size
-                res[i] = res[i] % size
+            for i in range(0, n-1):
+                res[i+1] += res[i]//n
+                res[i] = res[i] % n
     return res
 
 
-def exchange(size: int) -> list:
+def exchange(n: int) -> list:
     """
-    Créer une liste de valeur de 0 à size, 
+    Créer une liste de valeur de 0 à n, 
     si la liste est bonne :
         - renvoie le résultat correcte
     sinon 
@@ -106,7 +106,7 @@ def exchange(size: int) -> list:
 
     paramètre :
     -----------
-    size : int
+    n : int
     nombre de reine
 
     renvoie :
@@ -114,16 +114,16 @@ def exchange(size: int) -> list:
     res : list
     tableau des positions des reines par colonnes
     """
-    res = [i for i in range(size)]
+    res = [i for i in range(n)]
     while not is_valid(res):
-        index = random.randint(0, size-1)
-        res[index], res[(index+1) % size] = res[(index+1) % size], res[index]
+        index = random.randint(0, n-1)
+        res[index], res[(index+1) % n] = res[(index+1) % n], res[index]
     return res
 
 
-def ping_pong (size:int) ->list:
+def ping_pong(n: int) -> list:
     """
-    Créer une liste de 0 de taille size, 
+    Créer une liste de 0 de taille n, 
     si la liste est bonne :
         - renvoie le résultat correcte
     sinon 
@@ -132,7 +132,7 @@ def ping_pong (size:int) ->list:
 
     paramètre :
     -----------
-    size : int
+    n : int
     nombre de reine
 
     renvoie :
@@ -140,10 +140,11 @@ def ping_pong (size:int) ->list:
     res : list
     tableau des positions des reines par colonnes
     """
-    res = [0 for _ in range(size)]
+    res = [0 for _ in range(n)]
     while not is_valid(res):
-        index = random.randint(0, size-1)
-        res[index] = (res[index]+1)%size
+        index = random.randint(0, n-1)
+        res[index] = (res[index]+1) % n
     return res
+
 
 print(ping_pong(8))

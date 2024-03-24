@@ -9,19 +9,19 @@ from random import choice
 
 class MinConflicts(SolverRowList):
     @staticmethod
-    def solve(size: int) -> Optional[list[int]]:
+    def solve(n: int) -> Optional[list[int]]:
         fin = False
-        listeR = [None for i in range(size)]
+        listeR = [None for i in range(n)]
 
         while not fin:
             # initialisation
-            listeR = [None for i in range(size)]
+            listeR = [None for i in range(n)]
 
-            conf = MinConflicts.conflicts(size, listeR)
-            for i in range(size):
+            conf = MinConflicts.conflicts(n, listeR)
+            for i in range(n):
                 res = MinConflicts.place(i, conf)
                 listeR[i] = res
-                conf = MinConflicts.conflicts(size, listeR)
+                conf = MinConflicts.conflicts(n, listeR)
 
             fin = MinConflicts.valide(conf, listeR)
 

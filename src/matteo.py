@@ -37,7 +37,7 @@ def is_valid(queens: list[int]) -> bool:
 
 class Random(SolverRowList):
     @staticmethod
-    def solve(size: int) -> Optional[list[int]]:
+    def solve(n: int) -> Optional[list[int]]:
         """
         Résolution du problème par aléatoire
         Complète le tableau de résultat aléatoirement
@@ -46,7 +46,7 @@ class Random(SolverRowList):
 
         paramètre :
         -----------
-        size : intmin_conflicts
+        n : int
         nombre de reine
 
         renvoie :
@@ -58,9 +58,9 @@ class Random(SolverRowList):
         """
         progress = True
         while progress:
-            values = list(range(size))
+            values = list(range(n))
             res = []
-            compteur = size-1
+            compteur = n-1
             while compteur > -1:
                 id = random.randint(0, compteur)
                 res.append(values.pop(id))
@@ -70,14 +70,14 @@ class Random(SolverRowList):
 
 class BruteForce(SolverRowList):
     @staticmethod
-    def solve(size: int) -> Optional[list[int]]:
+    def solve(n: int) -> Optional[list[int]]:
         """
         Résolution du problème par brute force
         Complète le tableau de résultat par incrémentation par 1
 
         paramètre :
         -----------
-        size : int
+        n : int
         nombre de reine
 
         renvoie :
@@ -88,7 +88,7 @@ class BruteForce(SolverRowList):
         l'indice correspond au numéro de colonne
         """
         progress = True
-        res = [0 for _ in range(size)]
+        res = [0 for _ in range(n)]
         # tant que le tableau n'est pas correct
         while progress:
             if is_valid(res):
@@ -96,15 +96,15 @@ class BruteForce(SolverRowList):
             else:
                 # incrémentation des valeurs
                 res[0] = res[0]+1
-                for i in range(0, size-1):
-                    res[i+1] += res[i]//size
-                    res[i] = res[i] % size
+                for i in range(0, n-1):
+                    res[i+1] += res[i]//n
+                    res[i] = res[i] % n
         return res
 
 class Exchange(SolverRowList):
-    def solve(size: int) -> Optional[list[int]]:
+    def solve(n: int) -> Optional[list[int]]:
         """
-        Créer une liste de valeur de 0 à size, 
+        Créer une liste de valeur de 0 à n, 
         si la liste est bonne :
             - renvoie le résultat correcte
         sinon 
@@ -113,7 +113,7 @@ class Exchange(SolverRowList):
 
         paramètre :
         -----------
-        size : int
+        n : int
         nombre de reine
 
         renvoie :
@@ -121,8 +121,8 @@ class Exchange(SolverRowList):
         res : list
         tableau des positions des reines par colonnes
         """
-        res = [i for i in range(size)]
+        res = [i for i in range(n)]
         while not is_valid(res):
-            index = random.randint(0, size-1)
-            res[index], res[(index+1) % size] = res[(index+1) % size], res[index]
+            index = random.randint(0, n-1)
+            res[index], res[(index+1) % n] = res[(index+1) % n], res[index]
         return res
