@@ -6,8 +6,9 @@ import time
 import argparse
 from statistics import mean, median
 from importlib import import_module
-from solver import Solver
-from board import Board
+from src.solver import Solver
+from src.board import Board
+
 
 def solve(n: int, solver: Solver):
     solution = solver.solve(n)
@@ -88,7 +89,7 @@ if __name__ == '__main__':
     # Fetch the solver class
     module_name, class_name = solvers[args.algorithm]
     solver: Solver = getattr(import_module(
-        module_name), class_name)
+        'src.'+module_name), class_name)
 
     # Solve
     if (args.benchmark):

@@ -1,8 +1,8 @@
-# Solver des N reines
+# Problème des N reines
 
-## Usage
+## Solveur
 
-`./main.py <N> <algorithme>`
+`./solve.py <N> <algorithme>`
 
 option|description
 -|-
@@ -14,15 +14,15 @@ option|description
 
 Résoudre en $N=4$ avec le *backtracking*
 
-`./main.py 4 backtracking`
+`./solve.py 4 backtracking`
 
 Mesurer la performance en $N=3$ avec le *brute_force*
 
-`./main.py 3 brute_force -b`
+`./solve.py 3 brute_force -b`
 
 Mesurer la performance en $N=3$ avec le *brute_force* avec 100 exécutions
 
-`./main.py 3 brute_force -b 100`
+`./solve.py 3 brute_force -b 100`
 
 ### Todo
 
