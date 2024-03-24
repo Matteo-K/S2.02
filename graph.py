@@ -7,15 +7,6 @@ import argparse as ap
 import matplotlib.pyplot as plt
 import src.benchmarking as bench
 
-# ./graph.py memory 8 -b 100 mask backtracking_graphe
-# ./graph.py time 4 mask backtracking_graphe
-# ./graph.py time 4 8 -b 50 mask backtracking.*
-# ./graph.py time 6 7 mask -Ednx
-# ./graph.py time 6 8 mask -eDnx
-# ./graph.py time 6 9 mask -edNX
-
-# ./graph.py {mem,time} [NMIN] [NMAX] [OPTION]... [ALGORITHM]...
-
 
 def transform_char(string: str, index: int, transform: Callable[[str], str]) -> str:
     return string[:index] + transform(string[index]) + string[index + 1:]
@@ -109,7 +100,6 @@ if __name__ == '__main__':
                         help='show verbose output')
 
     # Graph options
-
     parser.add_argument('-t', '--title',
                         help='graph title. A title will be generated if this option not specified')
     parser.add_argument('-b', '--times',
