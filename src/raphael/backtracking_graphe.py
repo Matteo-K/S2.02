@@ -1,6 +1,6 @@
 from typing import Iterable, Callable, TypeVar, Optional
-from board import Board
-from solver import Solver
+from src.board import Board
+from src.solver import Solver
 
 T = TypeVar('T')
 

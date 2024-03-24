@@ -2,9 +2,9 @@
 Techniques de Marius
 """
 
-from solver import Solver
+from src.solver import Solver
 from typing import Optional
-from board import Board
+from src.board import Board
 import random
 
 def is_valid(queens: list[int]) -> bool:

@@ -1,6 +1,6 @@
 from abc import ABC, abstractstaticmethod
 from typing import Any
-from board import Board
+from src.board import Board
 from typing import Optional
 
 

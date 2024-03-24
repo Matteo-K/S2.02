@@ -2,7 +2,7 @@
 Technique de Min Conflicts de Paolo
 """
 
-from solver import SolverRowList
+from src.solver import SolverRowList
 from typing import Optional
 from random import choice
 

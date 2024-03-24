@@ -4,7 +4,7 @@ Techniques de résolution de Mattéo
 
 import random
 
-from solver import SolverRowList
+from src.solver import SolverRowList
 from typing import Optional
 
 def is_valid(queens: list[int]) -> bool:

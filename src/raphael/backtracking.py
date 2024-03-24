@@ -1,5 +1,5 @@
-from solver import Solver
-from board import Board
+from src.solver import Solver
+from src.board import Board
 from typing import Optional
 
 class Backtracking(Solver):
