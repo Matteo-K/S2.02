@@ -9,9 +9,6 @@ from importlib import import_module
 from solver import Solver
 from board import Board
 
-NB_BENCHMARKING_ITERATIONS = 200
-
-
 def solve(n: int, solver: Solver):
     solution = solver.solve(n)
     if solution is None:
@@ -22,7 +19,7 @@ def solve(n: int, solver: Solver):
         print(solution)
 
 
-def benchmark(n: int, solver: Solver, verbose_output: bool):
+def benchmark(n: int, solver: Solver, verbose_output: bool, times: int):
     durations: list[float] = []
     memories: list[int] = []
 
@@ -32,7 +29,7 @@ def benchmark(n: int, solver: Solver, verbose_output: bool):
     def fmt_int(x) -> str:
         return str(int(x))
 
-    for i in range(NB_BENCHMARKING_ITERATIONS):
+    for i in range(times):
         start_time = time.process_time()
 
         tracemalloc.start()
@@ -81,8 +78,8 @@ if __name__ == '__main__':
     parser.add_argument('n', type=int, help='Constante N')
     parser.add_argument('algorithm', type=str,
                         help='Algorithme à utiliser', choices=solvers.keys())
-    parser.add_argument('-b', '--benchmark', action='store_true',
-                        help="Mesurer la performance de l'algorithme au lieu de résoudre")
+    parser.add_argument('-b', '--benchmark',
+                        help="Mesurer la performance de l'algorithme au lieu de résoudre. La valeur de l'option donne le nombre d'exécutions (200 par défaut)", type=int, nargs='?', const=200, metavar='TIMES')
     parser.add_argument('-v', '--verbose', action='store_true',
                         help="Afficher la sortie verbeuse")
 
@@ -95,6 +92,6 @@ if __name__ == '__main__':
 
     # Solve
     if (args.benchmark):
-        benchmark(args.n, solver, args.verbose)
+        benchmark(args.n, solver, args.verbose, args.benchmark)
     else:
         solve(args.n, solver)

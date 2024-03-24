@@ -6,7 +6,7 @@
 
 option|description
 -|-
-`-b`, `--benchmark`|Mesurer la performance (temps & mémoire) de l'algorithme au lieu de résoudre
+`-b [TIMES]`, `--benchmark [TIMES]`|Mesurer la performance (temps & mémoire) de l'algorithme au lieu de résoudre. L'argument donne le nombre d'exécutions (200 par défaut)
 `-v`, `--verbose`|Afficher la sortie verbeuse
 `-h`, `--help`|Afficher l'aide
 
@@ -20,7 +20,10 @@ Mesurer la performance en $N=3$ avec le *brute_force*
 
 `./main.py 3 brute_force -b`
 
+Mesurer la performance en $N=3$ avec le *brute_force* avec 100 exécutions
+
+`./main.py 3 brute_force -b 100`
+
 ### Todo
 
 - Marius' techniques
-- Benchmark: specify call count (default 200)
