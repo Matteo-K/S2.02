@@ -19,12 +19,12 @@ def solve(n: int, solver: Solver):
 if __name__ == '__main__':
     # Parse arguments
     parser = ap.ArgumentParser(
-        description="Test and benchmark N-Queens problem algorithms", epilog='S2.02', formatter_class=ap.ArgumentDefaultsHelpFormatter)
+        description="Test and benchmark N-Queens problem algorithms", epilog='S2.02', formatter_class=bench.RawTextArgumentDefaultsHelpFormatter)
 
     parser.add_argument('n', type=int,
                         help='N value')
     parser.add_argument('algorithm', type=str,
-                        help='algorithm to use. Supports regular expressions.')
+                        help='algorithm to use. Supports regular expressions.\nAvailable algorithms:\n' + '\n'.join(f'  {algorithm}' for algorithm in sorted(bench.ALGORITHMS)))
     parser.add_argument('-b', '--benchmark', type=int, nargs='?', const=200, metavar='TIMES',
                         help="benchmark algorithm instead of solving. The value is the execution count")
     parser.add_argument('-v', '--verbose', action='store_true',

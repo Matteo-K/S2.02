@@ -54,4 +54,3 @@ Créer un graphique des temps CPU minimum et maximum avec $N\in[6;8]$, pour tous
 
 - Marius' techniques
 - autocompute execution count so expected time is less than X ms
-- add a way to list algorithms

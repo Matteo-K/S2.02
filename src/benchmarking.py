@@ -1,13 +1,18 @@
 from dataclasses import dataclass
 from importlib import import_module
+from math import log10
 from statistics import mean, median
 from sys import stderr
+from sys import stderr
 from typing import Optional, Iterable
+import argparse as ap
 import re
 import time
 import tracemalloc
-from sys import stderr
-from math import log10
+
+class RawTextArgumentDefaultsHelpFormatter(ap.RawTextHelpFormatter, ap.ArgumentDefaultsHelpFormatter):
+    pass
+
 
 _solvers = {
     'backtracking_graphe': ('src.raphael.backtracking_graphe', 'BacktrackingGraphe'),

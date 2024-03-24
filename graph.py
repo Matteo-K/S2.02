@@ -80,13 +80,9 @@ if __name__ == '__main__':
 
         def humanize(self, algorithm: str) -> str:
             return f'{algorithm} {self.field}'
-
-    class RawTextArgumentDefaultsHelpFormatter(ap.RawTextHelpFormatter, ap.ArgumentDefaultsHelpFormatter):
-        pass
-
     # Parse arguments
     parser = ap.ArgumentParser(
-        description="Creates MPL graphs to benchmark algorithms", epilog='S2.02', formatter_class=RawTextArgumentDefaultsHelpFormatter)
+        description="Creates MPL graphs to benchmark algorithms", epilog='S2.02', formatter_class=bench.RawTextArgumentDefaultsHelpFormatter)
 
     parser.add_argument('criterion', choices=criteria.keys(),
                         help='performance criterion')
@@ -95,7 +91,7 @@ if __name__ == '__main__':
     parser.add_argument('nmax', type=int,
                         help="maximal value of N")
     parser.add_argument('algorithms', nargs='+', metavar='ALGORITHM',
-                        help='algorithms to benchmark (each one will have its own colored curve). Supports regular expressions')
+                        help='algorithms to benchmark (each one will have its own colored curve). Supports regular expressions.\nAvailable algorithms:' + '\n'.join(f'  {algorithm}' for algorithm in sorted(bench.ALGORITHMS)))
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='show verbose output')
 
