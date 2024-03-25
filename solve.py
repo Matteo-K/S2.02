@@ -36,12 +36,12 @@ if __name__ == '__main__':
     valid_algorithms = list(bench.match_algorithms(args.algorithm))
     if len(valid_algorithms) == 0:
         bench.args_error(f'no algorithm matching "{args.algorithm}".')
-    if len(valid_algorithms) > 1:
-        bench.args_error(f'{len(valid_algorithms)} algorithms matching "{args.algorithm}". Use a more precise regular expression.')
 
-    solver = bench.get_solver(valid_algorithms[0])
+    for algorithm in valid_algorithms:
+        print(algorithm)
+        solver = bench.get_solver(algorithm)
 
-    if (args.benchmark):
-        print(bench.benchmark(args.n, solver, args.verbose, bench.NumberOfTimesBenchmarkingStrategy(args.benchmark)))
-    else:
-        solve(args.n, solver)
+        if (args.benchmark):
+            print(bench.benchmark(args.n, solver, args.verbose, bench.NumberOfTimesBenchmarkingStrategy(args.benchmark)))
+        else:
+            solve(args.n, solver)
