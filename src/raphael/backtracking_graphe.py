@@ -1,3 +1,7 @@
+"""
+Algorithme de backtracking graphe
+"""
+
 from typing import Iterable, Callable, TypeVar, Optional
 from src.board import Board
 from src.solver import Solver

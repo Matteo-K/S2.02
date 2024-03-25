@@ -132,7 +132,8 @@ if __name__ == '__main__':
             bench.args_error(f'no algorithm matching "{regex}".')
         chosen_algorithms.update(matched_algorithms)
 
-    benchmarking_strategy = bench.DurationBenchmarkingStrategy(args.duration / len(chosen_algorithms) / len(n_values)) if args.duration else bench.NumberOfTimesBenchmarkingStrategy(args.times)
+    benchmarking_strategy = bench.DurationBenchmarkingStrategy(
+        args.duration / len(chosen_algorithms) / len(n_values)) if args.duration else bench.NumberOfTimesBenchmarkingStrategy(args.times)
 
     relevant_result_attributes = {ResultAttribute(args.criterion, field) for field in fields if show_field[field]}
 

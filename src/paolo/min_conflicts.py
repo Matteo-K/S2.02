@@ -1,5 +1,5 @@
 """
-Technique de Min Conflicts de Paolo
+Algorithme des conflits minimum
 """
 
 from src.solver import SolverRowList

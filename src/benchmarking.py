@@ -13,15 +13,15 @@ from abc import ABC, abstractmethod
 _solvers = {
     'backtracking_graphe': ('src.raphael.backtracking_graphe', 'BacktrackingGraphe'),
     'backtracking': ('src.raphael.backtracking', 'Backtracking'),
-    'brute_force': ('src.matteo', 'BruteForce'),
-    'echange': ('src.matteo', 'Swap'),
+    'brute_force': ('src.matteo.brute_force', 'BruteForce'),
+    'echange': ('src.matteo.swap', 'Swap'),
     'mask': ('src.raphael.mask', 'Mask'),
     'min_conflicts': ('src.paolo.min_conflicts', 'MinConflicts'),
     'pingpong': ('src.marius.pingpong', 'PingPong'),
-    'random': ('src.matteo', 'Random'),
+    'random': ('src.matteo.random', 'Random'),
     'symetrie': ('src.marius.symetrie', 'Symetrie'),
 }
-""" (solver module name, solver class name) by algorithm """
+"""algorithm -> (solver module name, solver class name)"""
 
 ALGORITHMS = _solvers.keys()
 

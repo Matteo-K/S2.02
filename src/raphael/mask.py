@@ -1,5 +1,10 @@
+"""
+Algorithme de masque
+"""
+
 from src.solver import SolverRowList
 from typing import Optional
+
 
 class Mask(SolverRowList):
     @staticmethod

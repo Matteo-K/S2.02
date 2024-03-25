@@ -6,17 +6,17 @@
 
 ## Approches algorithmiques
 
-nom|principe
+nom|principe|script
 -|-
-[backtracking](backtracking.md)|Résolution case par case avec retour arrière
-[backtracking_graphe](backtracking_graphe.md)|Backtracking avec graphe implicite et arbre de décision
-[force_brute](force_brute.md)|Force brute
-[echange](echange.md)|Échange
-[masque](masque.md)|Backtracking avec matrice d'entiers et tangage des numéros de colonne
-[conflits_min](conflits_min.md)|Backtracking avec recherche de la case au moindre conflits
-[ping_pong](ping_pong.md)|Basé sur la force brute
-[aleatoire](aleatoire.md)|Utilisation de l'aléatoire
-[symetrie](symetrie.md)|Backtracking 2 par 2 reines
+[backtracking](backtracking.md)|Résolution case par case avec retour arrière|[backtracking.py](../src/)
+[backtracking_graphe](backtracking_graphe.md)|Backtracking avec graphe implicite et arbre de décision|[backtracking_graphe.py](../src/)
+[force_brute](force_brute.md)|Force brute|[force_brute.py](../src/)
+[echange](echange.md)|Échange basé sur l'aléatoire|[echange.py](../src/)
+[masque](masque.md)|Backtracking avec matrice d'entiers et tangage des numéros de colonne|[masque.py](../src/)
+[conflits_min](conflits_min.md)|Backtracking avec recherche de la case au moindre conflits|[conflits_min.py](../src/)
+[ping_pong](ping_pong.md)|Basé sur la force brute|[ping_pong.py](../src/)
+[aleatoire](aleatoire.md)|Utilisation de l'aléatoire|[aleatoire.py](../src/)
+[symetrie](symetrie.md)|Backtracking 2 par 2 reines|[symetrie.py](../src/)
 
 ### La fonction is_valid()
 

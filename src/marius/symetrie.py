@@ -42,7 +42,7 @@ class Symetrie(Solver):
         indice_colonne = 0
 
         # on continue tant que l'echiquier n'est pas valide et que toutes les reines ne sont pas posées
-        #print(is_valid_clg(queens))
+        # print(is_valid_clg(queens))
         while (len(queens) < n):
             # boucle qui cherche à poser les une reine dans la colonne
             while (indice_ligne < n):

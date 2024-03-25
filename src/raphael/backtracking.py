@@ -1,6 +1,11 @@
+"""
+Algorithme de backtracking
+"""
+
 from src.solver import Solver
 from src.board import Board
-from typing import Optional, Iterable
+from typing import Optional
+
 
 class Backtracking(Solver):
     @staticmethod
