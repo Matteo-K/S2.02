@@ -61,5 +61,5 @@ class Backtracking(Solver):
             return None
 
     @staticmethod
-    def toBoard(n: int, solution: Board) -> Board:
+    def to_board(n: int, solution: Board) -> Board:
         return solution
