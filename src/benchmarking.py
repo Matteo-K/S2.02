@@ -10,8 +10,25 @@ import time
 import tracemalloc
 from abc import ABC, abstractmethod
 
+_solvers = {
+    'backtracking_graphe': ('src.raphael.backtracking_graphe', 'BacktrackingGraphe'),
+    'backtracking': ('src.raphael.backtracking', 'Backtracking'),
+    'brute_force': ('src.matteo', 'BruteForce'),
+    'echange': ('src.matteo', 'Exchange'),
+    'mask': ('src.raphael.mask', 'Mask'),
+    'min_conflicts': ('src.paolo.min_conflicts', 'MinConflicts'),
+    'pingpong': ('src.marius.pingpong', 'PingPong'),
+    'random': ('src.matteo', 'Random'),
+    'symetrie': ('src.marius.symetrie', 'Symetrie'),
+}
+""" (solver module name, solver class name) by algorithm """
+
+ALGORITHMS = _solvers.keys()
+
+
 class RawTextArgumentDefaultsHelpFormatter(ap.RawTextHelpFormatter, ap.ArgumentDefaultsHelpFormatter):
     pass
+
 
 class BenchmarkingStrategy(ABC):
     @abstractmethod
@@ -22,6 +39,7 @@ class BenchmarkingStrategy(ABC):
     def get_verbose_output_line(self, times_executed_so_far: int, elapsed_seconds: float) -> str:
         pass
 
+
 class NumberOfTimesBenchmarkingStrategy(BenchmarkingStrategy):
     def __init__(self, number_of_times_to_execute: int):
         self.__nbot = number_of_times_to_execute
@@ -29,9 +47,10 @@ class NumberOfTimesBenchmarkingStrategy(BenchmarkingStrategy):
 
     def should_keep_going(self, times_executed_so_far: int, elapsed_seconds: float) -> bool:
         return times_executed_so_far < self.__nbot
-    
+
     def get_verbose_output_line(self, times_executed_so_far: int, elapsed_seconds: float) -> str:
         return f'\r{str(times_executed_so_far).zfill(self.__nbot_pad)}/{self.__nbot} {elapsed_seconds:.1f}sec'
+
 
 class DurationBenchmarkingStrategy(BenchmarkingStrategy):
     def __init__(self, benchmark_duration_seconds: float):
@@ -39,26 +58,12 @@ class DurationBenchmarkingStrategy(BenchmarkingStrategy):
 
     def should_keep_going(self, times_executed_so_far: int, elapsed_seconds: float) -> bool:
         return elapsed_seconds < self.__duration
-    
+
     def get_verbose_output_line(self, times_executed_so_far: int, elapsed_seconds: float) -> str:
         # it took us elapsed_seconds to execute times_executed_so_far
         # how much time can we execute in elapsed_seconds
         expected_max_times = int(times_executed_so_far / elapsed_seconds * self.__duration)
         return f'\r{times_executed_so_far}/{expected_max_times} {elapsed_seconds:.1f}sec'
-
-_solvers = {
-    'backtracking_graphe': ('src.raphael.backtracking_graphe', 'BacktrackingGraphe'),
-    'backtracking': ('src.raphael.backtracking', 'Backtracking'),
-    'brute_force': ('src.matteo', 'BruteForce'),
-    'echange': ('src.matteo', 'Exchange'),
-    'random': ('src.matteo', 'Random'),
-    'min_conflicts': ('src.paolo.min_conflicts', 'MinConflicts'),
-    'mask': ('src.raphael.mask', 'Mask'),
-    'pingpong': ('src.marius', 'PingPong')
-}
-""" (solver module name, solver class name) by algorithm """
-
-ALGORITHMS = _solvers.keys()
 
 
 def match_algorithms(regex: str) -> Iterable[str]:

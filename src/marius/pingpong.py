@@ -1,5 +1,5 @@
 """
-Techniques de Marius
+Techniques de Ping pong (Marius)
 """
 
 from src.solver import Solver
@@ -65,7 +65,7 @@ class PingPong(Solver):
         return res
 
     @staticmethod
-    def toBoard(n: int, solution: list[int]) -> Board:
+    def to_board(n: int, solution: list[int]) -> Board:
         board = Board(n)
         assert len(solution) == n
         for r, c in enumerate(solution):

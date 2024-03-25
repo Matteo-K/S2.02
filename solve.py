@@ -12,7 +12,7 @@ def solve(n: int, solver: Solver):
         print("No solution")
     else:
         if not isinstance(solution, Board):
-            print(solver.toBoard(n, solution))
+            print(solver.to_board(n, solution))
         print(solution)
 
 

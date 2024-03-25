@@ -74,7 +74,7 @@ class BacktrackingGraphe(Solver):
             return None
 
     @staticmethod
-    def toBoard(n: int, solution: list[int]) -> Board:
+    def to_board(n: int, solution: list[int]) -> Board:
         board = Board(n)
         assert len(solution) == n
         for c, r in enumerate(solution):

@@ -13,7 +13,7 @@ class Solver(ABC):
             Returns: the solution, of any type, or None, if no solution was found. The return value should be printable."""
 
     @abstractstaticmethod
-    def toBoard(n: int, solution: Any) -> Board:
+    def to_board(n: int, solution: Any) -> Board:
         """ Converts the solution to a board for easier visualization. """
 
 
@@ -27,7 +27,7 @@ class SolverRowList(Solver):
         """
 
     @staticmethod
-    def toBoard(n: int, solution: list[int]) -> Board:
+    def to_board(n: int, solution: list[int]) -> Board:
         board = Board(n)
         assert len(solution) == n
         for c, r in enumerate(solution):
