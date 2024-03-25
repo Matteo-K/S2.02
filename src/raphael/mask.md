@@ -19,3 +19,5 @@ La solution est simplement d'utiliser des entiers à la place des booléens, c'e
 Devrions-nous toujours commencer le backtracking à 0,0 (en haut à gauche). Il y a peut-être d'autres possibilités :
 
 On pourrait commencer par le milieu et progresser vers l'extérieur en spirales dans le sens des aiguilles d'une montre.
+
+Résultat : l'ordre des colonnes tangue de n//2 vers 0 et n-1. On ne change pas l'ordre des lignes, cela abaisse la performance.

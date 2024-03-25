@@ -98,11 +98,17 @@ if __name__ == '__main__':
     # Graph options
     parser.add_argument('-t', '--title',
                         help='graph title. A title will be generated if this option not specified')
-    parser.add_argument('-b', '--times',
-                        help="execution count", default=200, type=int, metavar='TIMES')
     parser.add_argument('-s', '--scale', choices={'linear', 'log', 'symlog', 'logit'}, default='linear',
                         help='the MPL scale to use on the Y axis')
+
     fields_parser.add_argument(parser, '-f', '--fields', DEFAULT_SHOWN_FIELDS)
+
+    benchmark_execution_mode = parser.add_mutually_exclusive_group()
+
+    benchmark_execution_mode.add_argument('-b', '--times', default=200, type=int, metavar='TIMES',
+                                          help="execution count")
+    benchmark_execution_mode.add_argument('-d', '--duration', type=float, metavar='TIMES',
+                                          help="maximum duration of the benchmark (seconds)")
 
     args = parser.parse_args()
 
@@ -122,6 +128,8 @@ if __name__ == '__main__':
             bench.args_error(f'no algorithm matching "{regex}".')
         chosen_algorithms.update(matched_algorithms)
 
+    benchmarking_strategy = bench.DurationBenchmarkingStrategy(args.duration / len(chosen_algorithms)) if args.duration else bench.NumberOfTimesBenchmarkingStrategy(args.times)
+
     relevant_result_attributes = {ResultAttribute(args.criterion, field) for field in fields if show_field[field]}
 
     # Run benchmarks
@@ -132,7 +140,7 @@ if __name__ == '__main__':
         for n in n_values:
             if args.verbose:
                 print(f'{algorithm} n={n}...', file=stderr)
-            benchmark_results.append(bench.benchmark(n, solver, args.verbose, args.times))
+            benchmark_results.append(bench.benchmark(n, solver, args.verbose, benchmarking_strategy))
         for rra in relevant_result_attributes:
             results[rra.humanize(algorithm)] = [getattr(result, rra.class_attribute) for result in benchmark_results]
 

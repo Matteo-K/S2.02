@@ -43,8 +43,13 @@ class Mask(SolverRowList):
                 # the solution is complete
                 return True
 
-            # strategy: resolve columns from left to right
-            column = foundCount
+            # Solve columns by pitching away from n//2 as foundCount increases.
+            # Example for n=4: 1, 2, 0, 3
+            if foundCount % 2 == 0:
+                column = n // 2 - foundCount // 2 - 1
+            else:
+                column = n // 2 + foundCount // 2
+
             validRows = (r for r in range(n) if nbo_queens_threatening_cell_at[r][column] == 0)
             for validRow in validRows:
                 mask(1, validRow, column)

@@ -1,6 +1,6 @@
 from src.solver import Solver
 from src.board import Board
-from typing import Optional
+from typing import Optional, Iterable
 
 class Backtracking(Solver):
     @staticmethod
@@ -30,22 +30,20 @@ class Backtracking(Solver):
 
         nbQueensRemaining = board.n
 
-        def backtracking_rec(tileNo: int) -> bool:
+        def backtracking_rec(cell_i: int) -> bool:
             nonlocal nbQueensRemaining
 
-            if tileNo == board.n * board.n:
+            if cell_i == n ** 2:
                 return nbQueensRemaining == 0
 
-            row = tileNo // board.n
-            col = tileNo % board.n
-
+            row, col = cell_i // n, cell_i % n
             if possible(row, col):
                 # Assuming that we place our queen here
                 setPossible(row, col, False)
                 nbQueensRemaining -= 1
 
                 # move on to the next cell: recursive call to see if the queen positions is good afterwards
-                if (backtracking_rec(tileNo + 1)):
+                if (backtracking_rec(cell_i + 1)):
                     # the queen position is good, place it here
                     board[row, col] = False
                     return True
@@ -55,7 +53,7 @@ class Backtracking(Solver):
                 setPossible(row, col, True)
 
             # move on to next cell
-            return backtracking_rec(tileNo + 1)
+            return backtracking_rec(cell_i + 1)
 
         if backtracking_rec(0):
             return board

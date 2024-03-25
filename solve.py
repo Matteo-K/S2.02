@@ -42,6 +42,6 @@ if __name__ == '__main__':
     solver = bench.get_solver(valid_algorithms[0])
 
     if (args.benchmark):
-        print(bench.benchmark(args.n, solver, args.verbose, args.benchmark))
+        print(bench.benchmark(args.n, solver, args.verbose, bench.NumberOfTimesBenchmarkingStrategy(args.benchmark)))
     else:
         solve(args.n, solver)

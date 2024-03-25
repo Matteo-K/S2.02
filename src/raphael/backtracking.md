@@ -63,3 +63,32 @@ $$
 \Leftrightarrow\ &row + col
 \end{split}
 $$
+
+## Optimisaton 1 : spirale
+
+Voir <mask.md>, faisons des spirales vers l'extérieur.
+
+D'abord trouvons une fonction pour obtenir les coordonnées de la prochaine case à partire de `tileNo`:
+
+&nbsp;|0|1|2|3
+-|-|-|-|-
+**0**|0|1|2|3
+**1**|4|5|6|7
+**2**|8|9|10|11
+**3**|12|13|14|15
+
+&nbsp;|0|1|2|3|4
+-|-|-|-|-|-
+**0**|0|1|2|3|4
+**1**|5|6|7|8|9
+**2**|10|11|12|13|14
+**3**|15|16|17|18|19
+**4**|20|21|22|23|24
+
+On voudrait 5, 6, 10, 9, 8, 4, 0, 1, 2, 3, 7, 11 ,15, 14, 13, 12
+
+ou 1:1, 1:2, 2:2, 2:1, 2:0, 1:0, 0:0, 0:1, 0:2, 0:3, 1:3, 2:3, 3:3, 3:2, 3:1, 3:0
+
+on pourrait faire un générateur qui part de `n//2`:`n//2`
+
+nope that doesn't work, it makes performance much worth, i guess i stand corrected.
