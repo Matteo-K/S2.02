@@ -14,7 +14,7 @@ _solvers = {
     'backtracking_graphe': ('src.raphael.backtracking_graphe', 'BacktrackingGraphe'),
     'backtracking': ('src.raphael.backtracking', 'Backtracking'),
     'brute_force': ('src.matteo', 'BruteForce'),
-    'echange': ('src.matteo', 'Exchange'),
+    'echange': ('src.matteo', 'Swap'),
     'mask': ('src.raphael.mask', 'Mask'),
     'min_conflicts': ('src.paolo.min_conflicts', 'MinConflicts'),
     'pingpong': ('src.marius.pingpong', 'PingPong'),

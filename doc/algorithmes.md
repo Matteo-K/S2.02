@@ -1,14 +1,26 @@
 # S2.02 Sujet 2 - Algorithmes
 
-On a un échiquier de N\*N cases, déterminer les agencements possibles de N reines.
+**Principe** : on a un échiquier de N\*N cases, déterminer les agencements possibles de N reines.
 
-Une reine doit être unique dans sa ligne, sa colonne et sa diagonale
+**Contraintes** : une reine doit être unique dans sa ligne, sa colonne et sa diagonale.
 
 ## Approches algorithmiques
 
+nom|principe
+-|-
+[backtracking](backtracking.md)|Résolution case par case avec retour arrière
+[backtracking_graphe](backtracking_graphe.md)|Backtracking avec graphe implicite et arbre de décision
+[force_brute](force_brute.md)|Force brute
+[echange](echange.md)|Échange
+[masque](masque.md)|Backtracking avec matrice d'entiers et tangage des numéros de colonne
+[conflits_min](conflits_min.md)|Backtracking avec recherche de la case au moindre conflits
+[ping_pong](ping_pong.md)|Basé sur la force brute
+[aleatoire](aleatoire.md)|Utilisation de l'aléatoire
+[symetrie](symetrie.md)|Backtracking 2 par 2 reines
+
 ### La fonction is_valid()
 
-#### Expliquation
+#### Explication
 
 La fonction vérifie si la liste de résultat est correcte autrement dit, si la liste les reines sont biens placé
 
@@ -26,13 +38,13 @@ Pour cela :
 La fonction parcours la liste de résultat comme un algorithme de recherche et compare deux valeurs entre elles
 Ainsi elle va regarder si les deux reines sélectionner sont sur la même ligne ou qu'elles sont sur la même diagonale
 
-#### Vérification en colonne :
+#### Vérification en colonne
 
     if tabResult[Reine1] == tabResult[Reine2]
 
 Les reines sont obligatoirement sur des colonnes différentes car la colonne est représenter par l'indice de case. Ducoup, on vérifie si les reines sont sur la même ligne
 
-#### Vérification des diagonales :
+#### Vérification des diagonales
 
     if |tabRes[i] - tabRes[j]| == |j - i|
 
@@ -72,29 +84,15 @@ La fonction essaye de résoudre le problème tant qu'elle n'a pas trouver de ré
 Les temps varis beaucoup entre chaque taille différentes
 Plus la grille est grande, plus le temps de recherche est long.
 
-### échange
+### Échange
 
-créer un tableau de résultat de 1 à n. 
+créer un tableau de résultat de 1 à n.
 
 vérifie si le tableau est correcte
 
 sinon, on inverse un indice aléatoire avec son indice supérieur
 
-## Marius
-
-On place les dames sur toutes les premières cases de l'échiquier
-
-Dès qu'une dame est en conflit, on l'avance d'une case.
-
-<https://fr.wikipedia.org/wiki/Probl%C3%A8me_des_huit_dames>
-
-## Graphe
-
-### Backtracking
-
-Comme pour le sudoku
-
-## Critère de comparaisons
+## Benchmarks
 
 ### Temps (en secondes)
 
@@ -110,7 +108,7 @@ Technique aléatoire :
 |     9     | 0.000000  | 0.046875  |         0.008203         |
 |    10     | 0.000000  | 0.250000  |         0.042500         |
 |    11     | 0.000000  | 1.218750  |         0.152891         |
-|    12     | 0.015625  | 2.000000  |         0.616875         | 
+|    12     | 0.015625  | 2.000000  |         0.616875         |
 
 Technique incrémentation :
 
@@ -129,8 +127,8 @@ technique echange
 |     4   |      0.000000   |      0.000000   |      0.000000   |
 |     5   |      0.000000   |      0.000000   |      0.000000   |
 |     6   |      0.000000   |      0.015625   |      0.000469   |
-|     7   |      0.000000   |      0.015625   |      0.000156   | 
-|     8   |      0.000000   |      0.015625   |      0.001250   | 
+|     7   |      0.000000   |      0.015625   |      0.000156   |
+|     8   |      0.000000   |      0.015625   |      0.001250   |
 |     9   |      0.000000   |      0.031250   |      0.003438   |
 |     10  |      0.000000   |      0.109375   |      0.013594   |
 |     11  |      0.000000   |      0.187500   |      0.020469   |
@@ -138,17 +136,14 @@ technique echange
 
 ### Mémoire
 
-#### a vérifier
-
- nb Reine | Backtracking | aléatoire | Incrémentation |
- :------: | :----------: | :-------: | :------------: |
-     4    |     ...      |   62.96   |      0.24      |
-     5    |     ...      |   26.56   |      0.24      |
-     6    |     ...      |   29.12   |      0.00      |
-     7    |     ...      |   31.36   |      0.00      |
-     8    |     ...      |   33.04   |      0.00      |
-     9    |     ...      |   25.76   |  |
-    10    |     ...      |   27.44   |  |
-    11    |     ...      |   32.48   |  |
-    12    |     ...      |           |     28.56      |
-
+|nb Reine | Backtracking | aléatoire | Incrémentation |
+|:------: | :----------: | :-------: | :------------: |
+|    4    |     ...      |   62.96   |      0.24      |
+|    5    |     ...      |   26.56   |      0.24      |
+|    6    |     ...      |   29.12   |      0.00      |
+|    7    |     ...      |   31.36   |      0.00      |
+|    8    |     ...      |   33.04   |      0.00      |
+|    9    |     ...      |   25.76   |  |
+|   10    |     ...      |   27.44   |  |
+|   11    |     ...      |   32.48   |  |
+|   12    |     ...      |           |     28.56      |

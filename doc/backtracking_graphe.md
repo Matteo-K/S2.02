@@ -2,9 +2,9 @@
 
 Version de du [backtracking](../backtracking/backtracking.md) utilisant les graphes.
 
-Se base sur le principe d'une machine à états finis
-
-Transition : placement d'une nouvelle reine
+Se base sur le principe d'une machine à états finis.\
+Les états sont représentés par des solutions partielles ou complètes.\
+Les transitions sont représentées par le placement d'une reine.
 
 On peut décrire cette stratégie par un graphe dont les sommets sont les différents états du jeu et les arêtes représentent les transitions d'un état à un autre. Dans le cas qui nous intéresse, le graphe ne possède pas de cycle (pas de retour possible), c'est donc un arbre appelé arbre de décision (<https://fr.wikipedia.org/wiki/Arbre_de_d%C3%A9cision>).
 

@@ -101,7 +101,7 @@ class BruteForce(SolverRowList):
                     res[i] = res[i] % n
         return res
 
-class Exchange(SolverRowList):
+class Swap(SolverRowList):
     def solve(n: int) -> Optional[list[int]]:
         """
         Créer une liste de valeur de 0 à n, 

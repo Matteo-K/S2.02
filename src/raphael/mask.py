@@ -5,6 +5,7 @@ class Mask(SolverRowList):
     @staticmethod
     def solve(n: int) -> Optional[SolverRowList]:
         nbo_queens_threatening_cell_at = [[0 for _ in range(n)] for _ in range(n)]
+
         def diag_no_se(r: int, c: int) -> tuple[int, int]:
             m = min(r, c)
             return r - m, c - m

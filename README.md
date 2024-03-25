@@ -1,4 +1,8 @@
-# Problème des N reines
+# S2.02 - Exploration Algorithmique
+
+**Équipe**&nbsp;: Mattéo Kervadec, Raphaël Bardini, Marius Chartier--Le Goff, Paolo Toé
+
+Voir la [documentation](/doc/algorithmes.md)
 
 ## Solveur - Exemples d'utilisation
 
@@ -7,17 +11,21 @@ Afficher l'aide
 `./solve.py -h`\
 `./solve.py --help`
 
-Résoudre en $N=4$ avec le *backtracking*
+Résoudre en $N=4$ avec l'algorithme *backtracking*
 
 `./solve.py 4 backtracking`
 
-Mesurer la performance en $N=3$ avec le *brute_force*
+Mesurer la performance en $N=4$ avec l'algorithme *brute_force*
 
-`./solve.py 3 brute_force -b`
+`./solve.py 4 brute_force -b`
 
-Mesurer la performance en $N=3$ avec le *brute_force* avec 100 exécutions
+Mesurer la performance en $N=5$ avec l'algorithme *mask* avec 100 exécutions
 
-`./solve.py 3 brute_force -b 100`
+`./solve.py 5 mask -b 100`
+
+Mesurer la performance en $N=6$ avec l'algorithme *mask* sur une durée de 5 secondes.
+
+`./solve.py 6 mask -d 5`
 
 ## Création de graphiques - Exemples d'utilisation
 
@@ -49,8 +57,3 @@ Créer un graphique du temps CPU médian avec $N\in[6;8]$, pour tous l'algorithm
 Créer un graphique des temps CPU minimum et maximum avec $N\in[6;8]$, pour tous l'algorithme *mask*
 
 `./graph.py time 6 9 mask -veIA`
-
-### Todo
-
-- Marius' techniques
-- autocompute execution count so expected time is less than X ms

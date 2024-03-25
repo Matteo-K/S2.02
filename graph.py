@@ -1,5 +1,9 @@
 #!/bin/env -S python3 -O
 
+"""
+Program to create MPL benchmarking charts of N-Queen solver algorithms.
+"""
+
 from dataclasses import dataclass
 from sys import stderr
 from typing import Any, Sequence, Callable
@@ -82,33 +86,33 @@ if __name__ == '__main__':
             return f'{algorithm} {self.field}'
     # Parse arguments
     parser = ap.ArgumentParser(
-        description="Creates MPL graphs to benchmark algorithms", epilog='S2.02', formatter_class=bench.RawTextArgumentDefaultsHelpFormatter)
+        description='Create MPL graphs of N-Queens problem solver algorithms benchmarks.', epilog='S2.02', formatter_class=bench.RawTextArgumentDefaultsHelpFormatter)
 
     parser.add_argument('criterion', choices=criteria.keys(),
                         help='performance criterion')
     parser.add_argument('nmin', type=int,
-                        help="minimal value of N. 4 is the minimum value for which a solution exists, excluding 0 and 1")
+                        help='minimal value of N. 4 is the minimum value for which a solution exists, excluding 0 and 1')
     parser.add_argument('nmax', type=int,
-                        help="maximal value of N")
+                        help='maximal value of N')
     parser.add_argument('algorithms', nargs='+', metavar='ALGORITHM',
-                        help='algorithms to benchmark (each one will have its own colored curve). Supports regular expressions.\nAvailable algorithms:' + '\n'.join(f'  {algorithm}' for algorithm in sorted(bench.ALGORITHMS)))
+                        help='algorithms to benchmark (each one will have its own colored curve). Supports regular expressions.\nAvailable algorithms:\n' + '\n'.join(f'  {algorithm}' for algorithm in bench.ALGORITHMS))
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='show verbose output')
 
     # Graph options
     parser.add_argument('-t', '--title',
-                        help='graph title. A title will be generated if this option not specified')
+                        help='generated graph title. A title will be generated if this option not specified')
     parser.add_argument('-s', '--scale', choices={'linear', 'log', 'symlog', 'logit'}, default='linear',
                         help='the MPL scale to use on the Y axis')
-
     fields_parser.add_argument(parser, '-f', '--fields', DEFAULT_SHOWN_FIELDS)
 
-    benchmark_execution_mode = parser.add_mutually_exclusive_group()
+    # Benchmarking options
+    benchmarking_group = parser.add_mutually_exclusive_group()
 
-    benchmark_execution_mode.add_argument('-b', '--times', default=200, type=int, metavar='TIMES',
-                                          help="execution count")
-    benchmark_execution_mode.add_argument('-d', '--duration', type=float, metavar='TIMES',
-                                          help="maximum duration of the benchmark (seconds)")
+    benchmarking_group.add_argument('-b', '--times', default=200, type=int,
+                                          help='benchmark execution count')
+    benchmarking_group.add_argument('-d', '--duration', type=float,
+                                          help='benchmark duration (seconds)')
 
     args = parser.parse_args()
 
