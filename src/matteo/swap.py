@@ -9,6 +9,7 @@ import random
 
 
 class Swap(SolverRowList):
+    @staticmethod
     def solve(n: int) -> Optional[list[int]]:
         """
         Créer une liste de valeur de 0 à n, 

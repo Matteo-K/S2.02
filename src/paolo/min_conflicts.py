@@ -93,7 +93,6 @@ class MinConflicts(SolverRowList):
         return conf
 
     @staticmethod
-    
     def place(indice: int, conf: list[list[int]]):
         """
             Méthode pour placer une reine dans la case d'une colonne avec le moins de conflits.
