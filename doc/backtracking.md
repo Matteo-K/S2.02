@@ -12,14 +12,14 @@ Et donc l'indice de chaque diagonale de la liste des donné ainsi:
 
 $$
 \begin{split}
-d_{NE\_SO} &= \lfloor\frac{tileNo}{N}\rfloor + N - tileNo \mod N - 1\\
-d_{NE\_SO} &= row + N - col - 1
+d_{NE\\\_SO} &= \lfloor\frac{tileNo}{N}\rfloor + N - tileNo \mod N - 1\\
+d_{NE\\\_SO} &= row + N - col - 1
 \end{split}
 $$
 
 $$
 \begin{split}
-d_{NO\_SE} &= \lfloor\frac{tileNo}{N}\rfloor + tileNo \mod N\\
-d_{NO\_SE} &= row + col
+d_{NO\\\_SE} &= \lfloor\frac{tileNo}{N}\rfloor + tileNo \mod N\\
+d_{NO\\\_SE} &= row + col
 \end{split}
 $$

@@ -48,12 +48,12 @@ Entrée :
 $\forall r \in \N \cap [0;N[$ souhaitant être ajouté au vecteur solution $S$,
 
 - Ligne libre : $r \notin S$
-- Diagonale Nord-Est Sud-Ouest (NE SO) : $g_{i,\ j}$ pour tous $i,\ j$ de $d_{NE\_SO}(r, c)$ à $(N, 0)$
-- Diagonale Nord-Ouest Sud-Est (NO SE) : $g_{i,\ j}$ pour tous $i,\ j$ de $d_{NO\_SE}(r, c)$ à $(N, N)$
+- Diagonale Nord-Est Sud-Ouest (NE SO) : $g_{i,\ j}$ pour tous $i,\ j$ de $d_{NE\\\_SO}(r, c)$ à $(N, 0)$
+- Diagonale Nord-Ouest Sud-Est (NO SE) : $g_{i,\ j}$ pour tous $i,\ j$ de $d_{NO\\\_SE}(r, c)$ à $(N, N)$
 
 ### Parcours de diagonales
 
-$$d_{NE\_SO}(r, c) \to \begin{split}
+$$d_{NE\\\_SO}(r, c) \to \begin{split}
 a &:= r + c\\
 d_c &= min(a, N - 1)\\
 d_r &= a - d_c\\
@@ -61,7 +61,7 @@ d_r &= a - d_c\\
 
 Parcours : $d_r+i$, $d_c-j$
 
-$$d_{NO\_SE}(r, c) \to \begin{split}
+$$d_{NO\\\_SE}(r, c) \to \begin{split}
 m &:= min(r, c)\\
 d_r &= r - m\\
 d_c &= c - m
