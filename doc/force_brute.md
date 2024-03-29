@@ -4,7 +4,7 @@
 
 Le principe du brute force est de tester toutes les possibilités jusqu'à trouver une solution correcte
 
-## Type de résultat attendue
+## Type de résultat attendu
 
 Pour cela, nous utilisons un tableau en une dimension dont chaque valeur peut prendre les valeurs de 0 à n-1.
 exemple de solution pour un échiquier de taille 4 :
@@ -16,7 +16,7 @@ Et l'indice de la valeur donne l'indice de la colonne de la reine.
 
 Donc, pour cela, on incrémente de 1 la valeur du premier indice.
 Puis dès que la valeur du premier indice atteint la valeur n, 
-la valeur est mise à 0 et l'indice suivant est incrémenteé de 1.
+la valeur est mise à 0 et l'indice suivant est incrémenté de 1.
 Cela renvoie à utiliser un modulo sur chaque valeur du tableau entre chaque valeur.
 
 ## Fonction is_valid
