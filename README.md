@@ -2,7 +2,9 @@
 
 **Équipe**&nbsp;: Mattéo Kervadec, Raphaël Bardini, Marius Chartier--Le Goff, Paolo Toé
 
-Voir la [documentation](/doc/algorithmes.md)
+- [Documentation](/doc/algorithmes.md)
+- [Compte-rendu](/doc/S2.02%20Compte-Rendu.pdf)
+- [Diaporama soutenance](/doc/Diaporama%20soutenance.pdf)
 
 ## Solveur - exemples
 
