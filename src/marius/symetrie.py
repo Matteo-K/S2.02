@@ -1,26 +1,27 @@
+from src.board import Board
+from typing import Any
+from src.solver import Solver
+
+
 """
 Techniques de symétrie (Marius)
 """
-
-from src.solver import Solver
-from typing import Any
-from src.board import Board
+# Ce programme Python résout le problème des N reines en utilisant une approche de backtracking et en plaçant les reines 2 par 2 par symétrie.
 
 
 class Symetrie(Solver):
+    # La méthode solve est la fonction principale qui résout le problème des N reines.
     @staticmethod
     def solve(n: int) -> Any:
-        impaire = n % 2 == 1
 
+        # Fonction interne pour vérifier si la configuration actuelle des reines est valide.
         def is_valid_clg(queens: list) -> bool:
             """
-            vérifie si la liste de résultat est valide au problème
-
+            Vérifie si la liste de résultat est valide au problème
             paramètre :
             -----------
             queens : list
             liste des cordonnées de placement des reines
-
             renvoie :
             ---------
             bool
@@ -29,63 +30,39 @@ class Symetrie(Solver):
             """
             for i in range(len(queens)):
                 for j in range(i+1, len(queens)):
-                    if queens[i][0] == queens[j][0]\
-                            or queens[i][1] == queens[j][1]\
-                            or abs(queens[i][1] - queens[j][1]) == abs(queens[i][0] - queens[j][0]):
+                    # Vérifie si deux reines sont sur la même ligne, la même colonne ou sur la même diagonale.
+                    if queens[i][0] == queens[j][0] or queens[i][1] == queens[j][1] or abs(queens[i][1] - queens[j][1]) == abs(queens[i][0] - queens[j][0]):
                         return False
             return True
 
-        # queens = [0 for _ in range(N)]  # position des reines à 0
+        # Initialisation de la liste pour stocker les positions des reines et des variables pour suivre la position actuelle.
         queens = []
-
-        # on commence le trie par la reine la plus à gauche
         indice_ligne = 0
         indice_colonne = 0
 
-        # on continue tant que l'echiquier n'est pas valide et que toutes les reines ne sont pas posées
-        # print(is_valid_clg(queens))
+        # Boucle principale pour placer les reines sur le plateau.
         while (len(queens) < n):
-            # boucle qui cherche à poser les une reine dans la colonne
             while (indice_ligne < n):
-                if (impaire) and (indice_colonne == (n//2)):
-                    # on pose la reine et son opposé
-                    queens.append([indice_ligne, indice_colonne])
-                    if not is_valid_clg(queens):
+                # Tente de placer deux reines à la fois, une sur la diagonale principale et l'autre sur la diagonale opposée.
+                queens.append([indice_ligne, indice_colonne])
+                queens.append([n - 1 - indice_ligne, n - 1 - indice_colonne])
 
-                        queens = queens[:-1]
-                        indice_ligne += 1
-
-                    else:
-                        break
-                else:
-                    queens.append([indice_ligne, indice_colonne])
-                    queens.append([n - 1 - indice_ligne, n - 1 - indice_colonne])
-
-                # si le positionnement n'est pas valide on enlève les reines
-                # précédament posées
-                # et on passe à la ligne suivante
-                    if not is_valid_clg(queens):
-
-                        queens = queens[:-2]
-                        indice_ligne += 1
-
-                    else:
-                        break
-
-            if indice_ligne >= n:
-
-                if (impaire) and (indice_colonne == (n//2)):
-                    indice_ligne = queens[-1][0]+1
-                    queens = queens[:-1]
-                else:
-                    indice_ligne = queens[-2][0]+1
+                # Si la configuration n'est pas valide, retire les reines placées et incrémente l'indice de ligne.
+                if not is_valid_clg(queens):
                     queens = queens[:-2]
+                    indice_ligne += 1
+                else:
+                    break
+            # Si toutes les reines ont été placées, passe à la colonne suivanteet réinitialise l'indice de ligne.
+            # Sinon, retire les reines placées et on continue la progression de "indice_ligne".
+            if indice_ligne >= n:
                 indice_colonne -= 1
-
+                indice_ligne = queens[-2][0]+1
+                queens = queens[:-2]
             else:
                 indice_colonne += 1
                 indice_ligne = 0
-
+        # Renvoie la liste contenant les positions des reines.
         return queens
 
     @staticmethod
