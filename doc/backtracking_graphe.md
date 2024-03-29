@@ -25,7 +25,7 @@ Donc l'arbre a 9 niveaux en comptant le noeud racine, un vecteur vide.
 L'objectif est de trouver toutes les solutions.
 
 ```mermaid
-flowchart LR
+flowchart TD
     start[" "]
     start --> 0
     start --> 1
@@ -35,6 +35,22 @@ flowchart LR
     start --> 5
     start --> 6
     start --> 7
+    0 --> 00["0"]
+    0 --> 01["1"]
+    0 --> 02["2"]
+    0 --> 03["3"]
+    0 --> 04["4"]
+    0 --> 05["5"]
+    0 --> 06["6"]
+    0 --> 07["7"]
+    ell["&#8230;"]
+    1 ~~~ ell
+    2 ~~~ ell
+    3 ~~~ ell
+    4 ~~~ ell
+    5 ~~~ ell
+    6 ~~~ ell
+    7 ~~~ ell
 ```
 
 ## Contraintes de validité des numéros de ligne
