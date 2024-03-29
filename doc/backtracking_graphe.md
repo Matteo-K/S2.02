@@ -45,66 +45,39 @@ Entrée :
 - `S` : le vecteur des lignes
 - `g` : la matrice de booléens représentant la grille (vrai si libre)
 
-$\forall l \in \N \cap [0;8[$ souhaitant être ajouté au vecteur solution $S$,
+$\forall r \in \N \cap [0;N[$ souhaitant être ajouté au vecteur solution $S$,
 
-- Ligne libre : $l \notin S$
-- Diagonale NE SO : $g_{i,\ j}$ pour tous $i,\ j$ de $d_{NE\_SO}(l, c)$ à $N$
-- Diagonale SE NO : $g_{i,\ j}$ pour tous $i,\ j$ de $d_{SE\_NO}(l, c)$ à $0$
+- Ligne libre : $r \notin S$
+- Diagonale Nord-Est Sud-Ouest (NE SO) : $g_{i,\ j}$ pour tous $i,\ j$ de $d_{NE\_SO}(r, c)$ à $(N, 0)$
+- Diagonale Nord-Ouest Sud-Est (NO SE) : $g_{i,\ j}$ pour tous $i,\ j$ de $d_{NO\_SE}(r, c)$ à $(N, N)$
 
-## scratch
+### Parcours de diagonales
 
-comment itérer sur les cases formant la NE_SO?
+$$d_{NE\_SO}(r, c) \to \begin{split}
+a &:= r + c\\
+d_c &= min(a, N - 1)\\
+d_r &= a - d_c\\
+\end{split}$$
 
-$$d_{NE\_SO}(l, c) \to \begin{align*}
-a &= l + c\\
-d_l &= min(a, N)\\
-d_c &= a - l_d\\
-\end{align*}$$
+Parcours : $d_r+i$, $d_c-j$
 
-parcours : $d_l+i$, $c_l+j$
+$$d_{NO\_SE}(r, c) \to \begin{split}
+m &:= min(r, c)\\
+d_r &= r - m\\
+d_c &= c - m
+\end{split}$$
 
-pour SE_NO:
+Parcours : $d_r+i$, $d_c+j$
 
-$$d_{SE\_NO}(l, c) \to \begin{align*}
-a &= l - c\\
-d_l &= N - max(0, a)\\
-d_c &= N - max(0, -a)
-\end{align*}$$
+## Implémentation du backtracking
 
-parcours : $d_l-i$, $c_l-j$
+Pour implémenter le backtracking, il faut un moyen de faire marche arrière dans la résolution.
 
-### diagonals 2
-
-so this doesnt seem to work:
-
-coords|ne_so|se_no
--|-|-
-0,0|0,0|3,3
-0,1|0,1|2,3
-0,2|0,2|1,3
-0,3|0,3|0,3
-1,0||
-1,1||
-1,2||
-1,3||
-2,0||
-2,1||
-2,2||
-2,3||
-3,0||
-3,1||
-3,2||
-3,3||
-
-## possibleRows
-
-we need to implement the backtracking properly, so we need a way to rewind in the solving process.
-
-we proceed column by column and then row by row
+On procède colonne par colonne puis ligne par ligne.
 
 On s'aperçoit que toutes les lignes comme toutes les colonnes seront présentes exactement une fois dans la solution.
 
-disons que si il n'y a pas de ligne valide pour la colonne *c*,
+Disons que si il n'y a pas de ligne valide pour la colonne *c*,
 ça veut dire que notre début solution est incorrect et qu'on arrive dans un sans-issue dans l'arbre de décision.
 
-on doit donc faire marche arrière, cad repartir à la colonne précédente et prendre la ligne suivante.
+on doit donc faire marche arrière, c'est-à-dire revenir à la colonne précédente et prendre la ligne suivante.

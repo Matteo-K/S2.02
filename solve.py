@@ -6,12 +6,12 @@ Program to run or benchmark specific N-Queen solver algorithms.
 
 from src.board import Board
 from src.solver import Solver
+from typing import Optional, Any
 import argparse as ap
 import src.benchmarking as bench
 
 
-def solve(n: int, solver: Solver):
-    solution = solver.solve(n)
+def print_solution(n: int, solution: Optional[Any]):
     if solution is None:
         print('No solution')
     else:
@@ -54,4 +54,4 @@ if __name__ == '__main__':
         if (benchmarking_strategy):
             print(bench.benchmark(args.n, solver, args.verbose, benchmarking_strategy))
         else:
-            solve(args.n, solver)
+            print_solution(args.n, solver.solve(args.n))

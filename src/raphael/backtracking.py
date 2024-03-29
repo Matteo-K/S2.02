@@ -11,41 +11,43 @@ class Backtracking(Solver):
     @staticmethod
     def solve(n: int) -> Optional[Board]:
         board = Board(n)
-        isRowFree, isColumnFree = [
+        is_row_free, is_column_free = [
             [True for _ in range(board.n)] for _ in range(2)]
-        # NE-SO : 0 NE, n-1 SO
-        # NO-SE : 0 NO, n-1 SE
-        isDiagNeSoFree, isDiagNoSeFree = [
+
+        is_diag_neso_free, is_diag_nose_free = [
             [True for _ in range(board.n * 2 - 1)] for _ in range(2)]
 
-        def diagNeSoIndex(row: int, col: int) -> int:
+        def diag_neso_index(row: int, col: int) -> int:
             return row + board.n - col - 1
 
-        def diagNoSeIndex(row: int, col: int) -> int:
+        def diag_nose_index(row: int, col: int) -> int:
             return row + col
 
         def possible(row: int, col: int) -> bool:
-            return isRowFree[row] and isColumnFree[col] and isDiagNeSoFree[diagNeSoIndex(row, col)] and isDiagNoSeFree[diagNoSeIndex(row, col)]
+            return is_row_free[row]\
+                and is_column_free[col]\
+                and is_diag_neso_free[diag_neso_index(row, col)]\
+                and is_diag_nose_free[diag_nose_index(row, col)]
 
-        def setPossible(row: int, col: int, isPossible: bool):
-            isRowFree[row] = isPossible
-            isColumnFree[col] = isPossible
-            isDiagNeSoFree[diagNeSoIndex(row, col)] = isPossible
-            isDiagNoSeFree[diagNoSeIndex(row, col)] = isPossible
+        def set_possible(row: int, col: int, is_possible: bool):
+            is_row_free[row] = is_possible
+            is_column_free[col] = is_possible
+            is_diag_neso_free[diag_neso_index(row, col)] = is_possible
+            is_diag_nose_free[diag_nose_index(row, col)] = is_possible
 
-        nbQueensRemaining = board.n
+        nb_queens_remaining = board.n
 
         def backtracking_rec(cell_i: int) -> bool:
-            nonlocal nbQueensRemaining
+            nonlocal nb_queens_remaining
 
             if cell_i == n ** 2:
-                return nbQueensRemaining == 0
+                return nb_queens_remaining == 0
 
             row, col = cell_i // n, cell_i % n
             if possible(row, col):
                 # Assuming that we place our queen here
-                setPossible(row, col, False)
-                nbQueensRemaining -= 1
+                set_possible(row, col, False)
+                nb_queens_remaining -= 1
 
                 # move on to the next cell: recursive call to see if the queen positions is good afterwards
                 if (backtracking_rec(cell_i + 1)):
@@ -53,9 +55,9 @@ class Backtracking(Solver):
                     board[row, col] = False
                     return True
 
-                nbQueensRemaining += 1
+                nb_queens_remaining += 1
                 # placing the subsequent queens assuming there's a queen here as failed, revert
-                setPossible(row, col, True)
+                set_possible(row, col, True)
 
             # move on to next cell
             return backtracking_rec(cell_i + 1)

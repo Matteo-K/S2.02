@@ -14,9 +14,4 @@ class Board:
         self._board[index[0]][index[1]] = value
 
     def __str__(self):
-        s = ''
-        for row in self._board:
-            for cell in row:
-                s += '.' if cell else 'O'
-            s += '\n'
-        return s
+        return '\n'.join(''.join('.' if cell else 'O' for cell in row) for row in self._board)

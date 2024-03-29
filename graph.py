@@ -8,7 +8,6 @@ from dataclasses import dataclass
 from sys import stderr
 from typing import Any, Sequence, Callable
 import argparse as ap
-import matplotlib.pyplot as plt
 import src.benchmarking as bench
 
 
@@ -148,6 +147,9 @@ if __name__ == '__main__':
             benchmark_results.append(bench.benchmark(n, solver, args.verbose, benchmarking_strategy))
         for rra in relevant_result_attributes:
             results[rra.humanize(algorithm)] = [getattr(result, rra.class_attribute) for result in benchmark_results]
+
+    # MPL takes time to load, so only import it when needed
+    import matplotlib.pyplot as plt
 
     # Configure graph
     plt.title(args.title or f'{criteria[args.criterion][0]} benchmarking of {", ".join(chosen_algorithms)}')

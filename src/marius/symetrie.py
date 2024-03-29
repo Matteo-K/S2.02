@@ -10,8 +10,7 @@ from src.board import Board
 class Symetrie(Solver):
     @staticmethod
     def solve(n: int) -> Any:
-        if n % 2 == 1:
-            return None
+        impaire = n % 2 == 1
 
         def is_valid_clg(queens: list) -> bool:
             """
@@ -30,7 +29,9 @@ class Symetrie(Solver):
             """
             for i in range(len(queens)):
                 for j in range(i+1, len(queens)):
-                    if queens[i][0] == queens[j][0] or queens[i][1] == queens[j][1] or abs(queens[i][1] - queens[j][1]) == abs(queens[i][0] - queens[j][0]):
+                    if queens[i][0] == queens[j][0]\
+                            or queens[i][1] == queens[j][1]\
+                            or abs(queens[i][1] - queens[j][1]) == abs(queens[i][0] - queens[j][0]):
                         return False
             return True
 
@@ -46,33 +47,40 @@ class Symetrie(Solver):
         while (len(queens) < n):
             # boucle qui cherche à poser les une reine dans la colonne
             while (indice_ligne < n):
+                if (impaire) and (indice_colonne == (n//2)):
+                    # on pose la reine et son opposé
+                    queens.append([indice_ligne, indice_colonne])
+                    if not is_valid_clg(queens):
 
-                # on pose la reine et son opposé
-                """
-                queens[indice_colonne] = indice_ligne
-                queens[8-1-indice_colonne] = 8-indice_ligne-1
-                """
-                queens.append([indice_ligne, indice_colonne])
-                queens.append([n - 1 - indice_ligne, n - 1 - indice_colonne])
+                        queens = queens[:-1]
+                        indice_ligne += 1
+
+                    else:
+                        break
+                else:
+                    queens.append([indice_ligne, indice_colonne])
+                    queens.append([n - 1 - indice_ligne, n - 1 - indice_colonne])
 
                 # si le positionnement n'est pas valide on enlève les reines
                 # précédament posées
                 # et on passe à la ligne suivante
-                if not is_valid_clg(queens):
-                    """
-                    queens[indice_colonne] = indice_ligne
-                    queens[8-1-indice_colonne] = 8-indice_ligne-1
-                    """
-                    queens = queens[:-2]
-                    indice_ligne += 1
+                    if not is_valid_clg(queens):
 
-                else:
-                    break
+                        queens = queens[:-2]
+                        indice_ligne += 1
+
+                    else:
+                        break
 
             if indice_ligne >= n:
+
+                if (impaire) and (indice_colonne == (n//2)):
+                    indice_ligne = queens[-1][0]+1
+                    queens = queens[:-1]
+                else:
+                    indice_ligne = queens[-2][0]+1
+                    queens = queens[:-2]
                 indice_colonne -= 1
-                indice_ligne = queens[-2][0]+1
-                queens = queens[:-2]
 
             else:
                 indice_colonne += 1

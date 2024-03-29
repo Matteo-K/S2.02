@@ -3,7 +3,7 @@ from importlib import import_module
 from math import log10
 from statistics import mean, median
 from sys import stderr
-from typing import Optional, Iterable
+from typing import Optional, Iterable, Any
 import argparse as ap
 import re
 import time
@@ -110,18 +110,20 @@ class BenchmarkResult:
 def benchmark(n: int, solver: type, verbose_output: bool, strategy: BenchmarkingStrategy) -> BenchmarkResult:
     durations: list[float] = []
     memories: list[int] = []
+    solutions: list[Any] = []
 
     start_human_time = time.time()
 
     while strategy.should_keep_going(len(durations), time.time() - start_human_time):
         start_time = time.process_time()
         tracemalloc.start()
-        solver.solve(n)
+        solution = solver.solve(n)
+        solutions.append(solution)
         memory = tracemalloc.get_traced_memory()[1]
-        memories.append(memory)
+        memories.append(0 if solution is None else memory)
         tracemalloc.stop()
         duration = time.process_time() - start_time
-        durations.append(duration * 1000)
+        durations.append(0 if solution is None else duration * 1000)
 
         if verbose_output:
             print(strategy.get_verbose_output_line(len(durations), time.time() - start_human_time), file=stderr, end='')

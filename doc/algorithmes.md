@@ -6,19 +6,29 @@
 
 ## Approches algorithmiques
 
-nom|principe|script
--|-
-[backtracking](backtracking.md)|Résolution case par case avec retour arrière|[backtracking.py](../src/)
-[backtracking_graphe](backtracking_graphe.md)|Backtracking avec graphe implicite et arbre de décision|[backtracking_graphe.py](../src/)
-[force_brute](force_brute.md)|Force brute|[force_brute.py](../src/)
-[echange](echange.md)|Échange basé sur l'aléatoire|[echange.py](../src/)
-[masque](masque.md)|Backtracking avec matrice d'entiers et tangage des numéros de colonne|[masque.py](../src/)
-[conflits_min](conflits_min.md)|Backtracking avec recherche de la case au moindre conflits|[conflits_min.py](../src/)
-[ping_pong](ping_pong.md)|Basé sur la force brute|[ping_pong.py](../src/)
-[aleatoire](aleatoire.md)|Utilisation de l'aléatoire|[aleatoire.py](../src/)
-[symetrie](symetrie.md)|Backtracking 2 par 2 reines|[symetrie.py](../src/)
+Il existe plusieurs types d'algorithmes traitant du problème des N reines pour un échiquier de côté N :
 
-### La fonction is_valid()
+- Obtenir une solution
+- Obtenir toutes les solutions
+- Obtenir le nombre de solutions existantes
+
+Nous avons choisi de nous focaliser sur des algorithmes qui permettent d'obtenir une solution.
+
+Algorithme|Principe|Script
+-|-|-
+[Backtracking](backtracking.md)|Résolution case par case avec retour arrière|[backtracking.py](../src/raphael/backtracking.py)
+[Backtracking graphe](backtracking_graphe.md)|Backtracking avec graphe implicite et arbre de décision|[backtracking_graphe.py](../src/raphael/backtracking_graphe.py)
+[Force brute](force_brute.md)|Force brute|[brute_force.py](../src/matteo/brute_force.py)
+[Échange](echange.md)|Échange basé sur l'aléatoire|[swap.py](../src/matteo/swap.py)
+[Masque](masque.md)|Backtracking avec matrice d'entiers et tangage des numéros de colonne|[mask.py](../src/raphael/mask.py)
+[Conflits min](conflits_min.md)|Choix aléatoire de la case la moins menacée|[min_conflicts.py](../src/paolo/min_conflicts.py)
+[Ping pong](ping_pong.md)|Basé sur la force brute|[ping_pong.py](../src/marius/pingpong.py)
+[Aléatoire](aleatoire.md)|Utilisation de l'aléatoire|[aleatoire.py](../src/matteo/random.py)
+[Symétrie](symetrie.md)|Backtracking 2 par 2 reines|[symetrie.py](../src/marius/symetrie.py)
+
+## Compléments
+
+### 1. La fonction is_valid()
 
 #### Explication
 
@@ -55,95 +65,43 @@ Prenons l'exemple si dessous dans un cas avec deux reines sur un tableau d'ordre
     Q . . .
     . . . .
 
-Coordonnée de la reine 1 : (1,3)
-Coordonnée de la reine 2 : (2,0)
+Coordonnée de la reine 1 : (1,3)\
+Coordonnée de la reine 2 : (2,0)\
 Donc i vaut 0 et j vaut 3
 
-    |3 - 0| == |1 - 2|
-    |3| == |-1|
-    3 != 1
+$$\begin{split}
+\lvert3 - 0\rvert &= \lvert1 - 2\rvert\\
+\lvert3\rvert &= \lvert-1\rvert\\
+3 &\neq 1
+\end{split}$$
 
-Les résultats sont différentes donc les reines sont sur des diagonales différentes
+Les résultats sont différents donc les reines sont sur des diagonales différentes
 
-### Le brute Force
+## Idées d'optimisation supplémentaires
 
-Incrémente de 1 chaque indice du tableau de résultat
+### 1 : backtracking en spirale
 
-Quand le premier élément arrive à la limite n.
-On réalise un modulo de n et incrémente de 1 au second élément et ainsi de suite
+Résoudre la grille en faisant des des spirales vers l'extérieur dans le sens des aiguilles d'une montre.
 
-### Résolution par aléatoire
+D'abord trouvons une fonction pour obtenir les coordonnées de la prochaine case à partire de `tileNo`:
 
-Choisi aléatoirement le numéro de ligne du placement pour chaque colonne.
+tileNo|0|1|2|3
+-|-|-|-|-
+**0**|0|1|2|3
+**1**|4|5|6|7
+**2**|8|9|10|11
+**3**|12|13|14|15
 
-la valeur est choisi entre 0 et n. Et ne peut pas être représenter deux fois dans la liste.
+tileNo|0|1|2|3|4
+-|-|-|-|-|-
+**0**|0|1|2|3|4
+**1**|5|6|7|8|9
+**2**|10|11|12|13|14
+**3**|15|16|17|18|19
+**4**|20|21|22|23|24
 
-Les valeur sont initailisé avec range(0,n). Puis elles sont retirer de la liste range à chaque dès qu'elles sont sortit aléatoirement
-La fonction essaye de résoudre le problème tant qu'elle n'a pas trouver de résolution correcte
+On voudrait 5, 6, 10, 9, 8, 4, 0, 1, 2, 3, 7, 11 ,15, 14, 13, 12
 
-Les temps varis beaucoup entre chaque taille différentes
-Plus la grille est grande, plus le temps de recherche est long.
+ou 1:1, 1:2, 2:2, 2:1, 2:0, 1:0, 0:0, 0:1, 0:2, 0:3, 1:3, 2:3, 3:3, 3:2, 3:1, 3:0
 
-### Échange
-
-créer un tableau de résultat de 1 à n.
-
-vérifie si le tableau est correcte
-
-sinon, on inverse un indice aléatoire avec son indice supérieur
-
-## Benchmarks
-
-### Temps (en secondes)
-
-Technique aléatoire :
-
-| nb reines | temps min | temps max | temps moyen (exec 200 X) |
-| :-------: | :-------: | :-------: | :----------------------: |
-|     4     | 0.000000  | 0.015625  |         0.000078         |
-|     5     | 0.000000  | 0.015625  |         0.000078         |
-|     6     | 0.000000  | 0.031250  |         0.001172         |
-|     7     | 0.000000  | 0.031250  |         0.000937         |
-|     8     | 0.000000  | 0.031250  |         0.002812         |
-|     9     | 0.000000  | 0.046875  |         0.008203         |
-|    10     | 0.000000  | 0.250000  |         0.042500         |
-|    11     | 0.000000  | 1.218750  |         0.152891         |
-|    12     | 0.015625  | 2.000000  |         0.616875         |
-
-Technique incrémentation :
-
-| nb reines | temps min | temps max | temps moyen (exec 100 X) |
-| :-------: | :-------: | :-------: | :----------------------: |
-|     4     | 0.000000  | 0.015625  |      0.000313            |
-|     5     | 0.000000  | 0.031250  |      0.000469            |
-|     6     | 0.000000  | 0.078125  |      0.032344            |
-|     7     | 0.046875  | 0.187500  |      0.128438            |
-|     8     | 2.640625  | 5.500000  |      4.425000            |
-
-technique echange
-
-|nb reines|    temps min    |    temps max    |  temps moyen    |
-|:--------|:----------------|:----------------|:----------------|
-|     4   |      0.000000   |      0.000000   |      0.000000   |
-|     5   |      0.000000   |      0.000000   |      0.000000   |
-|     6   |      0.000000   |      0.015625   |      0.000469   |
-|     7   |      0.000000   |      0.015625   |      0.000156   |
-|     8   |      0.000000   |      0.015625   |      0.001250   |
-|     9   |      0.000000   |      0.031250   |      0.003438   |
-|     10  |      0.000000   |      0.109375   |      0.013594   |
-|     11  |      0.000000   |      0.187500   |      0.020469   |
-|     12  |      0.000000   |      0.500000   |      0.089375   |
-
-### Mémoire
-
-|nb Reine | Backtracking | aléatoire | Incrémentation |
-|:------: | :----------: | :-------: | :------------: |
-|    4    |     ...      |   62.96   |      0.24      |
-|    5    |     ...      |   26.56   |      0.24      |
-|    6    |     ...      |   29.12   |      0.00      |
-|    7    |     ...      |   31.36   |      0.00      |
-|    8    |     ...      |   33.04   |      0.00      |
-|    9    |     ...      |   25.76   |  |
-|   10    |     ...      |   27.44   |  |
-|   11    |     ...      |   32.48   |  |
-|   12    |     ...      |           |     28.56      |
+On pourrait partir de `n//2`:`n//2`, puis tanguer de plus en plus, verticalement et horizontalement? (comme dans l'algorithme du masque)

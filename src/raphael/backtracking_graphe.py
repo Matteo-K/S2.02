@@ -9,8 +9,8 @@ from src.solver import Solver
 T = TypeVar('T')
 
 
-def firstOrNone(iterable: Iterable[T], delegate: Callable[[T], bool]) -> Optional[T]:
-    return next((i for i in iterable if delegate(i)), None)
+def firstOrNone(iterable: Iterable[T], predicate: Callable[[T], bool]) -> Optional[T]:
+    return next((i for i in iterable if predicate(i)), None)
 
 
 class BacktrackingGraphe(Solver):
@@ -53,20 +53,20 @@ class BacktrackingGraphe(Solver):
 
             return True
 
-        def backtrack(partialSolution: list[int]) -> bool:
+        def backtrack(partial_solution: list[int]) -> bool:
             column = len(solution)  # determine the next column to solve
-            if len(partialSolution) == n:
+            if len(partial_solution) == n:
                 # the solution is complete
-                return partialSolution
+                return partial_solution
 
-            validRows = (r for r in range(n) if can_place_at(
-                partialSolution, r, column))
-            for validRow in validRows:
-                partialSolution.append(validRow)
-                if backtrack(partialSolution):
+            valid_rows = (r for r in range(n) if can_place_at(
+                partial_solution, r, column))
+            for valid_row in valid_rows:
+                partial_solution.append(valid_row)
+                if backtrack(partial_solution):
                     return True
                 else:
-                    partialSolution.remove(validRow)
+                    partial_solution.remove(valid_row)
 
             return False
 

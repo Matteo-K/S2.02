@@ -4,11 +4,11 @@ Algorithme de masque
 
 from src.solver import SolverRowList
 from typing import Optional
-
+from array import array
 
 class Mask(SolverRowList):
     @staticmethod
-    def solve(n: int) -> Optional[SolverRowList]:
+    def solve(n: int) -> Optional[list[int]]:
         nbo_queens_threatening_cell_at = [[0 for _ in range(n)] for _ in range(n)]
 
         def diag_no_se(r: int, c: int) -> tuple[int, int]:
@@ -42,33 +42,34 @@ class Mask(SolverRowList):
                 dr += 1
                 dc -= 1
 
-        solution = [None for _ in range(n)]
+        # Since the columns aren't solve lineraly, we need to create the whole list before starting.
+        # -1 is used as a placeholder value until a solution is found
+        solution = array('i', (i for i in range(n)))
 
-        def backtrack(foundCount: int) -> bool:
-            if foundCount == n:
+        def backtrack(found_count: int) -> bool:
+            if found_count == n:
                 # the solution is complete
                 return True
 
-            # Solve columns by pitching away from n//2 as foundCount increases.
-            # Example for n=4: 1, 2, 0, 3
-            if foundCount % 2 == 0:
-                column = n // 2 - foundCount // 2 - 1
+            # Solve columns by pitching away from n//2 as found_count increases.
+            if found_count % 2 == 0:
+                column = n // 2 - found_count // 2 - 1
             else:
-                column = n // 2 + foundCount // 2
+                column = n // 2 + found_count // 2
 
-            validRows = (r for r in range(n) if nbo_queens_threatening_cell_at[r][column] == 0)
-            for validRow in validRows:
-                mask(1, validRow, column)
-                if backtrack(foundCount + 1):
-                    solution[column] = validRow
+            valid_rows = (r for r in range(n) if nbo_queens_threatening_cell_at[r][column] == 0)
+            for valid_row in valid_rows:
+                mask(1, valid_row, column)
+                if backtrack(found_count + 1):
+                    solution[column] = valid_row
                     return True
                 else:
-                    mask(-1, validRow, column)
+                    mask(-1, valid_row, column)
 
             return False
 
         if backtrack(0):
-            assert None not in solution
+            assert -1 not in solution
             return solution
         else:
             return None
