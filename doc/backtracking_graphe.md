@@ -97,3 +97,21 @@ Disons que si il n'y a pas de ligne valide pour la colonne *c*,
 ça veut dire que notre début solution est incorrect et qu'on arrive dans un sans-issue dans l'arbre de décision.
 
 on doit donc faire marche arrière, c'est-à-dire revenir à la colonne précédente et prendre la ligne suivante.
+
+## Benchmark
+
+```mermaid
+xychart-beta
+title "Temps CPU - backtracking_graphe (100 essais)"
+x-axis "N" 4 --> 18
+y-axis "Temps CPU (ms)"
+line "backtracking_graphe moyenne" [0.12726751000000258, 0.07989920000000206, 0.45152146999999754, 0.1469456900000049, 1.926722210000002, 0.8551114400000015, 2.2642651000000003, 1.368801510000015, 7.448744330000006, 3.432327990000028, 56.92576401000003, 45.026441159999955, 343.25261874999995, 205.45886000000002, 1597.0099214300014]
+```
+
+```mermaid
+xychart-beta
+title "Mémoire - backtracking_graphe (100 essais)"
+x-axis "N" 4 --> 18
+y-axis "Mémoire (octets)"
+line "backtracking_graphe moyenne" [2772.28, 2729.13, 2951.04, 3175.6, 3415.04, 3640.24, 3920.72, 4152.72, 4384.4, 4585.36, 4888.69, 5112.72, 5344.4, 5577.04, 5840.72]
+```

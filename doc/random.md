@@ -32,3 +32,21 @@ Il suffit de vérifier si deux points sur une même ligne.
 Et de comparer qu'une reine n'est pas dans la diagonale d'une autre.
 Pour cela, il suffit de comparer la différence verticale et la différence horizontale entre deux reines.
 Si une reine est dans la diagonale d'une autre reine alors les deux résultats seront identiques.
+
+## Benchmark
+
+```mermaid
+xychart-beta
+title "Temps CPU - random (100 essais)"
+x-axis "N" 4 --> 12
+y-axis "Temps CPU (ms)"
+line "random moyenne" [0.14996097999999902, 0.20007957999999715, 2.633396690000006, 2.441660780000002, 8.736668089999997, 25.458683919999995, 113.03573662000002, 296.11380391000023, 973.7868871400008]
+```
+
+```mermaid
+xychart-beta
+title "Mémoire - random (100 essais)"
+x-axis "N" 4 --> 12
+y-axis "Mémoire (octets)"
+line "random moyenne" [343.72, 365.36, 377.12, 393.12, 392.4, 473.68, 473.68, 489.68, 489.68]
+```

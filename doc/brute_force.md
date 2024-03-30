@@ -34,3 +34,21 @@ C'est un ensemble d'engrenage où le premier engrenage doit faire un tour comple
 
 C'est un engrenage qui vise à représenter le nombre gogol. Car le premier engrenage doit faire un gogol tour pour que le dernier engrenage fasse un tour.
 Soit un temps supérieur que l'âge de l'univers.
+
+## Benchmark
+
+```mermaid
+xychart-beta
+title "Temps CPU - brute_force (100 essais)"
+x-axis "N" 4 --> 8
+y-axis "Temps CPU (ms)"
+line "brute_force moyenne" [0.46170349, 1.5663489300000022, 55.996693279999995, 209.3769838300001, 6517.7851967900015]
+```
+
+```mermaid
+xychart-beta
+title "Mémoire - brute_force (100 essais)"
+x-axis "N" 4 --> 8
+y-axis "Mémoire (octets)"
+line "brute_force moyenne" [245.63, 256, 256, 256, 256]
+```
