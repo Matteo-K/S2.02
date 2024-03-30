@@ -6,157 +6,173 @@ Program to create MPL benchmarking charts of N-Queen solver algorithms.
 
 from dataclasses import dataclass
 from sys import stderr
-from typing import Any, Sequence, Callable
+from time import time
+from typing import Iterable, Iterator, Collection
 import argparse as ap
-import src.benchmarking as bench
+import src.benchmarking as bch
 
 
-def transform_char(string: str, index: int, transform: Callable[[str], str]) -> str:
-    return string[:index] + transform(string[index]) + string[index + 1:]
+@dataclass(frozen=True)
+class ResultAttribute:
+    criterion: str
+    field: str
+
+    @property
+    def class_attribute(self):
+        return f'{FIELDS[self.field]}_{self.criterion}'
 
 
-class FieldsArgumentParser:
-    def __init__(self, fields: Sequence[str]):
-        # Find the field letter index
-        for i in range(min(map(len, fields))):
-            if len({field[i] for field in fields}) == len(fields) and all(field[i].isalpha() for field in fields):
-                self.__i = i
-                break
-        else:
-            raise ValueError("Couldn't find an index for distinct field letters")
-        self.__fields = {field[self.__i].casefold(): field for field in fields}
+def benchmark_unbounded_n(algorithms: Collection[str], min_n: int, benchmarking_strategy: bch.BenchmarkingStrategy, total_duration: float) -> Iterator[list[bch.BenchmarkResult]]:
+    duration_per_algorithm = total_duration / len(algorithms)
+    for algorithm in algorithms:
+        solver = bch.get_solver(algorithm)
+        n = min_n
+        benchmark_results = []
+        start_instant = time()
+        while time() - start_instant < duration_per_algorithm:
+            if args.verbose:
+                print(f'{algorithm} n={n}...', file=stderr)
+            benchmark_results.append(bch.benchmark(n, solver, args.verbose, benchmarking_strategy))
+            n += 1
+        yield benchmark_results
 
-    def unparse(self, show_fields: dict[str, bool]) -> str:
-        if list(show_fields.keys()) != list(self.__fields.values()):
-            raise ValueError('The fields in show_fields are different from the ones this object was initialized with')
 
-        return ''.join(field[self.__i].upper() if show else field[self.__i].lower() for field, show in show_fields.items())
+def benchmark_bounded_n(algorithms: Iterable[str],
+                        n_range: range, benchmarking_strategy: bch.BenchmarkingStrategy) -> Iterator[list[bch.BenchmarkResult]]:
+    for algorithm in algorithms:
+        solver = bch.get_solver(algorithm)
+        benchmark_results = []
+        for n in n_range:
+            if args.verbose:
+                print(f'{algorithm} n={n}...', file=stderr)
+            benchmark_results.append(bch.benchmark(n, solver, args.verbose, benchmarking_strategy))
+        yield benchmark_results
 
-    def parse(self, field_arg: str) -> dict[str, bool]:
-        if len(field_arg) != len(self.__fields):
-            raise ValueError('field_arg is not of the correct length')
-        if not field_arg.isalpha():
-            raise ValueError('field_arg is not alphabetic')
 
-        return {self.__fields[l.casefold()]: l.isupper() for l in field_arg}
+CRITERIA = {
+    # Keys are BenchmarkResult attribute suffixes
+    'mem': ('Memory', 'bytes'),
+    'time': ('CPU time', 'ms'),
+}
 
-    def add_argument(self, parser: ap.ArgumentParser, short_name: str, long_name: str, defaults: dict[str, bool]) -> str:
-        helpstring = 'show (uppercase), or hide (lowercase) fields:\n' + ''.join(
-            f'  {letter} as in {transform_char(name, self.__i, lambda l: l.upper())}\n'
-            for letter, name in self.__fields.items())
-        parser.add_argument(short_name, long_name, default=fields_parser.unparse(defaults),
-                            help=helpstring)
+FIELDS = {
+    # Values are BenchmarkResult attribute prefixes
+    'average': 'avg',
+    'median': 'med',
+    'min': 'min',
+    'max': 'max',
+}
 
+DEFAULT_SHOWN_FIELDS = {
+    'average': True,
+    'median': False,
+    'min': False,
+    'max': False,
+}
 
 if __name__ == '__main__':
-    criteria = {
-        # Keys are BenchmarkResult attribute suffixes
-        'mem': ('Memory', 'bytes'),
-        'time': ('CPU time', 'ms'),
-    }
-
-    fields = {
-        # Keys are BenchmarkResult attribute prefixes
-        'average': 'avg',
-        'median': 'med',
-        'min': 'min',
-        'max': 'max',
-    }
-
-    DEFAULT_SHOWN_FIELDS = {
-        'average': True,
-        'median': False,
-        'min': False,
-        'max': False,
-    }
-
-    fields_parser = FieldsArgumentParser(fields.keys())
-
-    @dataclass(frozen=True)
-    class ResultAttribute:
-        criterion: str
-        field: str
-
-        @property
-        def class_attribute(self):
-            return f'{fields[self.field]}_{self.criterion}'
-
-        def humanize(self, algorithm: str) -> str:
-            return f'{algorithm} {self.field}'
     # Parse arguments
     parser = ap.ArgumentParser(
-        description='Create MPL graphs of N-Queens problem solver algorithms benchmarks.', epilog='S2.02', formatter_class=bench.RawTextArgumentDefaultsHelpFormatter)
+        description='Create MPL graphs of N-Queens problem solver algorithms benchmarks.', epilog='S2.02',
+        formatter_class=bch.RawTextArgumentDefaultsHelpFormatter)
 
-    parser.add_argument('criterion', choices=criteria.keys(),
-                        help='performance criterion')
-    parser.add_argument('nmin', type=int,
-                        help='minimal value of N. 4 is the minimum value for which a solution exists, excluding 0 and 1')
-    parser.add_argument('nmax', type=int,
-                        help='maximal value of N')
-    parser.add_argument('algorithms', nargs='+', metavar='ALGORITHM',
-                        help='algorithms to benchmark (each one will have its own colored curve). Supports regular expressions.\nAvailable algorithms:\n' + '\n'.join(f'  {algorithm}' for algorithm in bench.ALGORITHMS))
+
+# [N]- : start at N (default 4), requires duration and count
+# [N]-M : from n (default 4) to m, requires duration or count
+
+# graph.py {mem, time} {duration, count, n-values}
+# graph.py time --duration 60 --count 200 # get to maximum n with these parameters
+# graph.py time 4-10 --count 60 --n-values
+#
+
+    parser.add_argument('criterion', choices=CRITERIA.keys(),
+                        help='performance criterion\n\n')
+    parser.add_argument('n_interval', type=bch.interval_arg_type(4, '-'), metavar='N-INTERVAL',
+                        help='''N value interval.
+With maximum specified (count xor duration have to be specified):
+  -M       from 4 to M
+  N-M      from N to M
+
+With maximum unspecified (count and duration have to be specified):
+  N        start at N
+  N-       start at N
+
+N must be at least 4 (the minimum value for which a solution exists, excluding 0 and 1).
+
+''')
+    parser.add_argument('algorithms', nargs='+', metavar='ALGORITHM', type=bch.constrain(
+        str, bch.re_is_valid, 'algorithm must be a valid Python regular expression'),
+        help='algorithms to benchmark (each one will have its own colored curve). Supports regular expressions.\nAvailable algorithms:'
+        + ''.join(f'\n  {algorithm}' for algorithm in bch.ALGORITHMS))
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='show verbose output')
 
     # Graph options
-    parser.add_argument('-t', '--title',
-                        help='generated graph title. A title will be generated if this option not specified')
-    parser.add_argument('-s', '--scale', choices={'linear', 'log', 'symlog', 'logit'}, default='linear',
-                        help='the MPL scale to use on the Y axis')
-    fields_parser.add_argument(parser, '-f', '--fields', DEFAULT_SHOWN_FIELDS)
+    options_graph = parser.add_argument_group('Graph options')
+    options_graph.add_argument('-t', '--title',
+                               help='generated graph title. A title will be generated if this option not specified')
+    options_graph.add_argument('-s', '--scale', choices={'linear', 'log', 'symlog', 'logit'}, default='linear',
+                               help='the MPL scale to use on the Y axis')
+    options_graph.add_argument('-f', '--fields', action=bch.fields_arg(FIELDS.keys()), default=DEFAULT_SHOWN_FIELDS)
 
     # Benchmarking options
-    benchmarking_group = parser.add_mutually_exclusive_group()
-
-    benchmarking_group.add_argument('-b', '--times', default=200, type=int,
-                                          help='benchmark execution count')
-    benchmarking_group.add_argument('-d', '--duration', type=float,
-                                          help='benchmark duration (seconds)')
+    options_benchmarking = parser.add_argument_group('Benchmarking options')
+    options_benchmarking.add_argument('-c', '--count',
+                                      type=bch.constrain(int, lambda n: n > 0, 'execution count must be greater than zero'),
+                                      help='benchmarking execution count')
+    options_benchmarking.add_argument('-d', '--duration',
+                                      type=bch.constrain(float, lambda t: t > 0, 'duration must be greater than zero'),
+                                      help='benchmarking duration (seconds)')
 
     args = parser.parse_args()
 
-    if args.nmin < 4:
-        bench.args_error(f'NMIN ({args.nmin}) must be at least 4')
-    if args.nmin > args.nmax:
-        bench.args_error(f'NMIN ({args.nmin}) is greater than NMAX ({args.nmax})')
-
-    show_field = fields_parser.parse(args.fields)
-
-    n_values = range(args.nmin, args.nmax + 1)
-
+    # Extract chosen algorithms
     chosen_algorithms = set()
     for regex in args.algorithms:
-        matched_algorithms = tuple(bench.match_algorithms(regex))
+        matched_algorithms = tuple(bch.match_algorithms(regex))
         if len(matched_algorithms) == 0:
-            bench.args_error(f'no algorithm matching "{regex}".')
+            parser.error(f'no algorithm matching "{regex}".')
         chosen_algorithms.update(matched_algorithms)
 
-    benchmarking_strategy = bench.DurationBenchmarkingStrategy(
-        args.duration / len(chosen_algorithms) / len(n_values)) if args.duration else bench.NumberOfTimesBenchmarkingStrategy(args.times)
+    # Extract relevant result attributes
+    relevant_result_attributes = {ResultAttribute(args.criterion, field) for field in FIELDS if args.fields[field]}
 
-    relevant_result_attributes = {ResultAttribute(args.criterion, field) for field in fields if show_field[field]}
+    if args.n_interval[1] is None:  # If N is unbounded
+        if args.count is None or args.duration is None:
+            parser.error("the maximum value of N isn't specified; benchmarking count and duration must be specified")
 
-    # Run benchmarks
-    results = {}
-    for algorithm in chosen_algorithms:
-        solver = bench.get_solver(algorithm)
-        benchmark_results = []
-        for n in n_values:
-            if args.verbose:
-                print(f'{algorithm} n={n}...', file=stderr)
-            benchmark_results.append(bench.benchmark(n, solver, args.verbose, benchmarking_strategy))
-        for rra in relevant_result_attributes:
-            results[rra.humanize(algorithm)] = [getattr(result, rra.class_attribute) for result in benchmark_results]
+        results = list(benchmark_unbounded_n(chosen_algorithms, args.n_interval[0],
+                                        bch.CountBenchmarkingStrategy(args.count),
+                                        args.duration))
+        n_range = range(args.n_interval[0], len(results[0]) + args.n_interval[0])
+    else:
+        if (args.count is None) == (args.duration is None):
+            parser.error("the maximum value of N is specified; benchmarking count or duration (only one of the two) must be specified")
+
+        n_range = range(args.n_interval[0], args.n_interval[1] + 1)
+        results = benchmark_bounded_n(chosen_algorithms, n_range,
+                                      bch.CountBenchmarkingStrategy(args.count)
+                                      if args.duration is None else
+                                      bch.DurationBenchmarkingStrategy(
+                                          args.duration / len(chosen_algorithms) / len(n_range)))
+
+    result_data = {f'{rra.field} {algorithm}': tuple(getattr(result, rra.class_attribute)
+                                                     for result in benchmark_results)
+                   for algorithm, benchmark_results in zip(chosen_algorithms, results, strict=True)
+                   for rra in relevant_result_attributes}
+
+    if args.verbose:
+        print('Benchmark completed, creating plot...', file=stderr)
 
     # MPL takes time to load, so only import it when needed
     import matplotlib.pyplot as plt
 
     # Configure graph
-    plt.title(args.title or f'{criteria[args.criterion][0]} benchmarking of {", ".join(chosen_algorithms)}')
-    plt.ylabel(f'{criteria[args.criterion][0]} ({criteria[args.criterion][1]})')
+    plt.title(args.title or f'{CRITERIA[args.criterion][0]} benchmarking of {", ".join(chosen_algorithms)}')
+    plt.ylabel(f'{CRITERIA[args.criterion][0]} ({CRITERIA[args.criterion][1]})')
     plt.xlabel('N')
     plt.yscale(args.scale)
-    for label, row in results.items():
-        plt.plot(n_values, row, label=label)
+    for label, row in result_data.items():
+        plt.plot(n_range, row, label=label)
     plt.legend()
     plt.show()

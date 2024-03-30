@@ -3,12 +3,12 @@ Algorithme de masque
 """
 
 from src.solver import SolverRowList
-from typing import Optional
+from typing import Optional, Sequence
 from array import array
 
 class Mask(SolverRowList):
     @staticmethod
-    def solve(n: int) -> Optional[list[int]]:
+    def solve(n: int) -> Optional[Sequence[int]]:
         nbo_queens_threatening_cell_at = [[0 for _ in range(n)] for _ in range(n)]
 
         def diag_no_se(r: int, c: int) -> tuple[int, int]:
