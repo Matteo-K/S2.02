@@ -15,8 +15,7 @@ Les valeurs du tableau représentent l'indice de la ligne de la reine.
 Et l'indice de la valeur donne l'indice de la colonne de la reine.
 
 Donc, pour cela, on incrémente de 1 la valeur du premier indice.
-Puis dès que la valeur du premier indice atteint la valeur n, 
-la valeur est mise à 0 et l'indice suivant est incrémenté de 1.
+Puis dès que la valeur du premier indice atteint la valeur n, la valeur est mise à 0 et l'indice suivant est incrémenté de 1.
 Cela renvoie à utiliser un modulo sur chaque valeur du tableau entre chaque valeur.
 
 ## Fonction is_valid

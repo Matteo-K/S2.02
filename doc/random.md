@@ -17,12 +17,12 @@ Et l'indice de la valeur donne l'indice de la colonne de la reine.
 On choisi aléatoirement le numéro de ligne du placement pour chaque colonne.
 La valeur est choisie entre 0 et n-1 et ne peut pas être représenté deux fois dans la liste.
 
-Pour cela, on créer un tableau avec les valeurs de 0 à n-1. 
+Pour cela, on créer un tableau avec les valeurs de 0 à n-1.
 Puis on extrait les valeurs suivant un indice choisi aléatoirement.
 La fonction essaye de résoudre le problème tant qu'elle n'a pas trouvé de résolution correcte.
 
 Les temps varient beaucoup entre chaque taille différente.
-La recherche peut être instantanée, mais peut également être exponentielle suivant la taille de l'échiquier. 
+La recherche peut être instantanée, mais peut également être exponentielle suivant la taille de l'échiquier.
 
 ## Fonction is_valid
 

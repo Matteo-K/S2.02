@@ -9,7 +9,6 @@ On réalise un modulo de n et incrémente de 1 au second élément et ainsi de s
 
 La  différence avec l'algorithme fore brute c'est qu'ici on choisit la colonne à incrémenter aléatoirement
 
-
 ## Fonction is_valid
 
 L'utilisation d'un tableau en 1 dimension valorise la vérification du tableau.
