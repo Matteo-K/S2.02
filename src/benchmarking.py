@@ -106,16 +106,9 @@ class BenchmarkResult:
 
 
 @dataclass(frozen=True)
-class BenchmarkDto:
-    n_range: str
-    result: dict[str, BenchmarkResult]
-
-
-@dataclass(frozen=True)
 class Benchmark:
-    def __init__(self, benchmark_dto: BenchmarkDto):
-        object.__setattr__(self, 'n_range', eval(benchmark_dto.n_range))
-        object.__setattr__(self, 'result', benchmark_dto.result)
+    min_n: int
+    result: dict[str, BenchmarkResult]
 
 
 def benchmark(n: int, solver: type, verbose_output: bool, strategy: BenchmarkingStrategy) -> BenchmarkResult:

@@ -95,7 +95,6 @@ N must be at least 4 (the minimum value for which a solution exists, excluding 0
         results = list(benchmark_unbounded_n(chosen_algorithms, args.n_interval[0],
                                              bch.CountBenchmarkingStrategy(args.count),
                                              args.duration))
-        n_range = range(args.n_interval[0], len(results[0]) + args.n_interval[0])
     else:
         if (args.count is None) == (args.duration is None):
             parser.error("the maximum value of N is specified; benchmarking count or duration (only one of the two) must be specified")
@@ -107,7 +106,7 @@ N must be at least 4 (the minimum value for which a solution exists, excluding 0
                                       bch.DurationBenchmarkingStrategy(
                                           args.duration / len(chosen_algorithms) / len(n_range)))
 
-    benchmark = bch.BenchmarkDto(repr(n_range),
+    benchmark = bch.Benchmark(args.n_interval[0],
                                  {algorithm: result
                                   for algorithm, result in zip(chosen_algorithms, results, strict=True)})
     if args.verbose:

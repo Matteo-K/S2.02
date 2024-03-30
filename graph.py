@@ -37,11 +37,11 @@ def generate_mpl(benchmark: bch.Benchmark, fields: dict[str, bool], criterion: s
     plt.yscale(scale)
     for algorithm, results in benchmark.result.items():
         for field in (field for field, show in fields.items() if show):
-            plt.plot(benchmark.n_range,
+            plt.plot(range(benchmark.min_n, benchmark.min_n + len(results)),
                      [result[f"{field}_{criterion}"] for result in results],
                      label=f'{algorithm} {FIELD_NAMES[field]}')
-    plt.legend()
-    plt.savefig(stdout.buffer)
+    plt.legend(bbox_to_anchor=(1.01, 1), loc='upper left')
+    plt.savefig(stdout.buffer, bbox_inches='tight')
 
 
 def generate_mermaid(benchmark: bch.Benchmark, fields: dict[str, bool], criterion: str,
@@ -58,7 +58,7 @@ def generate_mermaid(benchmark: bch.Benchmark, fields: dict[str, bool], criterio
         print('```mermaid')
     print('xychart-beta')
     print(f'title "{escape(title)}"')
-    print(f'x-axis "{escape(xlabel)}" {benchmark.n_range.start} --> {benchmark.n_range.stop - 1}')
+    print(f'x-axis "{escape(xlabel)}" {benchmark.min_n} --> {benchmark.min_n + max(map(len, benchmark.result.values()))}')
     print(f'y-axis "{escape(ylabel)}"')
     for algorithm, results in benchmark.result.items():
         for field in (field for field, show in fields.items() if show):
@@ -103,7 +103,7 @@ The result is printed to standard output.'''
 
     args = parser.parse_args()
 
-    benchmark = bch.Benchmark(bch.BenchmarkDto(*json.load(stdin).values()))
+    benchmark = bch.Benchmark(*json.load(stdin).values())
 
     common_args = {
         'benchmark': benchmark,
