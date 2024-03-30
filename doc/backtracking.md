@@ -1,4 +1,4 @@
-# Backtracking
+# Algorithme de backtracking
 
 Backtracking simple avec une optimisation : au lieu de parcourir les lignes, colonnes et diagonales sur la grille, on stocke si elle sont libres dans des listes annexes.
 

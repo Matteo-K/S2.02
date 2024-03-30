@@ -1,4 +1,4 @@
-# Masque
+# Algorithme du masque
 
 Idée initiale&nbsp;: au lieu d'utiliser des booléens pour indiquer si une cellule contient ou non une reine, on indique si une case est menacée ou non.
 

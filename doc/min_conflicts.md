@@ -1,4 +1,4 @@
-# Algorithme de conflits minimum
+# Algorithme des conflits minimum
 
 ## Principe
 

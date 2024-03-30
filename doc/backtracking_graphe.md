@@ -1,4 +1,4 @@
-# Backtracking graphe
+# Algorithme de backtracking graphe
 
 Version de du [backtracking](../backtracking/backtracking.md) utilisant les graphes.
 

@@ -1,4 +1,4 @@
-# Échange
+# Algoritmhe d'échange
 
 ## Principe
 

@@ -22,7 +22,7 @@ def print_solution(n: int, solution: Optional[Any]):
 if __name__ == '__main__':
     # Parse arguments
     parser = ap.ArgumentParser(
-        description='Test and benchmark N-Queens problem solver algorithms.', epilog='S2.02', formatter_class=bch.RawTextArgumentDefaultsHelpFormatter)
+        description='Test and benchmark N-Queens problem solver algorithms.', epilog=bch.EPILOG, formatter_class=bch.RawTextArgumentDefaultsHelpFormatter)
 
     parser.add_argument('n', type=int,
                         help='N value')

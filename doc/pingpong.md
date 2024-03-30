@@ -1,5 +1,6 @@
-# Algorithme pingpong 
- #### (comme force brute mais avec de l'aléatoire)
+# Algorithme du ping-pong
+
+(comme force brute mais avec de l'aléatoire)
 
 Incrémente de 1 chaque indice du tableau de résultat
 

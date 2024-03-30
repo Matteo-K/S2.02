@@ -18,12 +18,12 @@ Algorithme|Principe|Script
 -|-|-
 [Backtracking](backtracking.md)|Résolution case par case avec retour arrière|[backtracking.py](../src/raphael/backtracking.py)
 [Backtracking graphe](backtracking_graphe.md)|Backtracking avec graphe implicite et arbre de décision|[backtracking_graphe.py](../src/raphael/backtracking_graphe.py)
-[Force brute](force_brute.md)|Force brute|[brute_force.py](../src/matteo/brute_force.py)
-[Échange](echange.md)|Échange basé sur l'aléatoire|[swap.py](../src/matteo/swap.py)
-[Masque](masque.md)|Backtracking avec matrice d'entiers et tangage des numéros de colonne|[mask.py](../src/raphael/mask.py)
-[Conflits min](conflits_min.md)|Choix aléatoire de la case la moins menacée|[min_conflicts.py](../src/paolo/min_conflicts.py)
-[Ping pong](ping_pong.md)|Basé sur la force brute|[ping_pong.py](../src/marius/pingpong.py)
-[Aléatoire](aleatoire.md)|Utilisation de l'aléatoire|[aleatoire.py](../src/matteo/random.py)
+[Force brute](brute_force.md)|Force brute|[brute_force.py](../src/matteo/brute_force.py)
+[Échange](swap.md)|Échange basé sur l'aléatoire|[swap.py](../src/matteo/swap.py)
+[Masque](mask.md)|Backtracking avec matrice d'entiers et tangage des numéros de colonne|[mask.py](../src/raphael/mask.py)
+[Conflits min](min_conflicts.md)|Choix aléatoire de la case la moins menacée|[min_conflicts.py](../src/paolo/min_conflicts.py)
+[Ping pong](pingpong.md)|Basé sur la force brute|[ping_pong.py](../src/marius/pingpong.py)
+[Aléatoire](random.md)|Utilisation de l'aléatoire|[aleatoire.py](../src/matteo/random.py)
 [Symétrie](symetrie.md)|Backtracking 2 par 2 reines|[symetrie.py](../src/marius/symetrie.py)
 
 ## Compléments

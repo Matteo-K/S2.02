@@ -11,11 +11,13 @@ import re
 import time
 import tracemalloc
 
+EPILOG = 'S2.02 C4'
+
 _solvers = {
     'backtracking_graphe': ('src.raphael.backtracking_graphe', 'BacktrackingGraphe'),
     'backtracking': ('src.raphael.backtracking', 'Backtracking'),
     'brute_force': ('src.matteo.brute_force', 'BruteForce'),
-    'echange': ('src.matteo.swap', 'Swap'),
+    'swap': ('src.matteo.swap', 'Swap'),
     'mask': ('src.raphael.mask', 'Mask'),
     'min_conflicts': ('src.paolo.min_conflicts', 'MinConflicts'),
     'pingpong': ('src.marius.pingpong', 'PingPong'),
@@ -75,7 +77,6 @@ def get_solver(algorithm: str) -> Optional[type]:
     module_name, class_name = _solvers[algorithm]
     return getattr(import_module(module_name), class_name)
 
-
 @dataclass(frozen=True)
 class BenchmarkResult:
     """ Result of a benchmarking """
@@ -102,6 +103,16 @@ class BenchmarkResult:
 
         return '\n'.join(f'{kv[0]}: {format(kv[1])}' for kv in self.__dict__.items())
 
+@dataclass(frozen=True)
+class BenchmarkDto:
+    n_range: str
+    result: dict[str, BenchmarkResult]
+
+@dataclass(frozen=True)
+class Benchmark:
+    def __init__(self, benchmark_dto: BenchmarkDto):
+        object.__setattr__(self, 'n_range', eval(benchmark_dto.n_range))
+        object.__setattr__(self, 'result', benchmark_dto.result)
 
 def benchmark(n: int, solver: type, verbose_output: bool, strategy: BenchmarkingStrategy) -> BenchmarkResult:
     durations: list[float] = []
@@ -125,7 +136,7 @@ def benchmark(n: int, solver: type, verbose_output: bool, strategy: Benchmarking
             print(strategy.get_verbose_output_line(len(durations), time.time() - benchmark_start_instant), file=stderr, end='')
 
     if verbose_output:
-        print()
+        print(file=stderr)
 
     return BenchmarkResult(
         mean(durations),
@@ -185,7 +196,7 @@ def constrain(parser: Callable[[str], _T], constraint: Callable[[_T], bool], msg
     def parse(arg: str):
         res = parser(arg)
         if not constraint(res):
-            raise ap.ArgumentTypeError(msg or 'Constraint failed', res)
+            raise ap.ArgumentTypeError(f"{msg or 'Constraint failed'} (got {res})")
         return res
     return parse
 
@@ -209,12 +220,12 @@ def interval_arg_type(min_min: int, separator: str) -> Callable[[str], tuple[int
                 raise ap.ArgumentTypeError(f'minimum value ({min}) is too small (expected at least {min_min})')
             return min, max
         except ValueError as e:
-            raise ap.ArgumentTypeError(*e.args)
+            raise ap.ArgumentTypeError(*e.args) from e
     return parse
 
 def re_is_valid(pattern: str) -> bool:
     try:
         re.compile(pattern)
         return True
-    except:
+    except re.error:
         return False
