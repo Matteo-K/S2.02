@@ -6,6 +6,8 @@ from typing import Optional
 import random
 
 # Définition de la classe PingPong qui hérite de la classe Solver
+
+
 class PingPong(Solver):
     # Méthode statique solve qui résout le problème des N reines
     @staticmethod

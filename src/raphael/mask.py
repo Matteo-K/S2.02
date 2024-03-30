@@ -6,6 +6,7 @@ from src.solver import SolverRowList
 from typing import Optional, Sequence
 from array import array
 
+
 class Mask(SolverRowList):
     @staticmethod
     def solve(n: int) -> Optional[Sequence[int]]:

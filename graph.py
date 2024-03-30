@@ -67,6 +67,7 @@ def generate_mermaid(benchmark: bch.Benchmark, fields: dict[str, bool], criterio
     if markdown_friendly:
         print('```')
 
+
 DEFAULT_SHOWN_FIELDS = {
     'avg': True,
     'med': False,
@@ -75,7 +76,7 @@ DEFAULT_SHOWN_FIELDS = {
 }
 
 if __name__ == '__main__':
-    prog_description='''Create MPL or Mermaid representations of benchmarks.
+    prog_description = '''Create MPL or Mermaid representations of benchmarks.
 
 The benchmark JSON is read from standard input.
 The result is printed to standard output.'''

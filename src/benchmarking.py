@@ -77,6 +77,7 @@ def get_solver(algorithm: str) -> Optional[type]:
     module_name, class_name = _solvers[algorithm]
     return getattr(import_module(module_name), class_name)
 
+
 @dataclass(frozen=True)
 class BenchmarkResult:
     """ Result of a benchmarking """
@@ -103,16 +104,19 @@ class BenchmarkResult:
 
         return '\n'.join(f'{kv[0]}: {format(kv[1])}' for kv in self.__dict__.items())
 
+
 @dataclass(frozen=True)
 class BenchmarkDto:
     n_range: str
     result: dict[str, BenchmarkResult]
+
 
 @dataclass(frozen=True)
 class Benchmark:
     def __init__(self, benchmark_dto: BenchmarkDto):
         object.__setattr__(self, 'n_range', eval(benchmark_dto.n_range))
         object.__setattr__(self, 'result', benchmark_dto.result)
+
 
 def benchmark(n: int, solver: type, verbose_output: bool, strategy: BenchmarkingStrategy) -> BenchmarkResult:
     durations: list[float] = []
@@ -222,6 +226,7 @@ def interval_arg_type(min_min: int, separator: str) -> Callable[[str], tuple[int
         except ValueError as e:
             raise ap.ArgumentTypeError(*e.args) from e
     return parse
+
 
 def re_is_valid(pattern: str) -> bool:
     try:

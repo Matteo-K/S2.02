@@ -21,13 +21,13 @@ def print_solution(n: int, solution: Optional[Any]):
 
 if __name__ == '__main__':
     # Parse arguments
-    parser = ap.ArgumentParser(
-        description='Test and benchmark N-Queens problem solver algorithms.', epilog=bch.EPILOG, formatter_class=bch.RawTextArgumentDefaultsHelpFormatter)
+    parser = ap.ArgumentParser(description='Test and benchmark N-Queens problem solver algorithms.',
+                               epilog=bch.EPILOG, formatter_class=bch.RawTextArgumentDefaultsHelpFormatter)
 
     parser.add_argument('n', type=int,
                         help='N value')
-    parser.add_argument('algorithm', type=str,
-                        help='algorithm to use. Supports regular expressions.\nAvailable algorithms:\n' + '\n'.join(f'  {algorithm}' for algorithm in bch.ALGORITHMS))
+    parser.add_argument('algorithm', type=str, help='algorithm to use. Supports regular expressions.\nAvailable algorithms:\n' +
+                        '\n'.join(f'  {algorithm}' for algorithm in bch.ALGORITHMS))
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='show verbose output')
 

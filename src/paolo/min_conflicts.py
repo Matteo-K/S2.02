@@ -22,36 +22,35 @@ class MinConflicts(SolverRowList):
     """
     @staticmethod
     def solve(n: int) -> Optional[list[int]]:
-
         """
             ceci est l'algorithme principal
         """
         fin = False
-        # initialisation de la liste des coordonnées des reines, 
+        # initialisation de la liste des coordonnées des reines,
         # l'indice de la liste correspond au numero de colonne d'une reine, et la valeur à son numero de ligne
-        listeR = [None for i in range(n)] 
+        listeR = [None for i in range(n)]
 
         while not fin:
             # réinitialisation
             listeR = [None for i in range(n)]
 
-            #initialisation d'une grille de conflits
+            # initialisation d'une grille de conflits
             conf = MinConflicts.conflicts(n, listeR)
 
-            # pour toutes les colonnes on place une reine sur le scases 
+            # pour toutes les colonnes on place une reine sur le scases
             # où on trouve le moins de conflits
             for i in range(n):
                 # res est le numero de ligne de la nouvelle reine placée
                 # la grille de conflits conf est utilisée dans la methode place()
-                # pour trouver 
+                # pour trouver
                 res = MinConflicts.place(i, conf)
-                listeR[i] = res # la reine est placée
+                listeR[i] = res  # la reine est placée
                 # la liste des conflits est encore crée avec la nouvelle reine
                 conf = MinConflicts.conflicts(n, listeR)
 
-            fin = MinConflicts.valide(conf, listeR) # on vérifie si aucune des reines sont en danger
+            fin = MinConflicts.valide(conf, listeR)  # on vérifie si aucune des reines sont en danger
 
-        return listeR # on retourne la liste des solutions
+        return listeR  # on retourne la liste des solutions
 
     @staticmethod
     def conflicts(n: int, listeR: list[Optional[int]]) -> list[list[int]]:
@@ -69,9 +68,9 @@ class MinConflicts(SolverRowList):
         """
         conf = [[0 for i in range(n)] for i in range(n)]
         for ind in range(len(listeR)):
-            r = listeR[ind] # prend le numero de ligne de la reine de colonne ind
+            r = listeR[ind]  # prend le numero de ligne de la reine de colonne ind
 
-            if r != None: # si reine est placée alors:
+            if r != None:  # si reine est placée alors:
                 for i in range(n):
                     # la case où est mise la reine n'est pas en conflit
                     if (i != ind):
@@ -103,17 +102,17 @@ class MinConflicts(SolverRowList):
         """
         taille = len(conf)
         min = 999
-        indiceMin = [] # liste des cases dont le conflit est minimum
-
+        indiceMin = []  # liste des cases dont le conflit est minimum
 
         for i in range(taille):
-            if conf[i][indice] < min: # si une case à moins de conflits que min, la liste indiceMin est voidée et on y ajoute l'indice ce la nouvelle case 
+            if conf[i][indice] < min:  # si une case à moins de conflits que min, la liste indiceMin est voidée et on y ajoute l'indice ce la nouvelle case
                 min = conf[i][indice]
                 indiceMin = []
                 indiceMin.append(i)
-            elif conf[i][indice] == min: # si une case a un nombre de conflit(s) egal à la case de conflit minimal, on ajoute son indice à la liste de cases de conflit minimaux
+            # si une case a un nombre de conflit(s) egal à la case de conflit minimal, on ajoute son indice à la liste de cases de conflit minimaux
+            elif conf[i][indice] == min:
                 indiceMin.append(i)
-        return choice(indiceMin) # une des cases dont le conflit est minimum est choisie aléatoirement
+        return choice(indiceMin)  # une des cases dont le conflit est minimum est choisie aléatoirement
 
     @staticmethod
     def valide(conf: list[list[int]], coordsReines) -> bool:
@@ -125,7 +124,7 @@ class MinConflicts(SolverRowList):
         res = True
         taille = len(coordsReines)
         i = 0
-        while (res) and (i < taille): 
+        while (res) and (i < taille):
             # si dans la grille de conflits l'eplacement de la reine est en conflit, donc supérieur à 0,
             # l'échiquier n'a pas été remplit correctement
             if conf[coordsReines[i]][i] != 0:
