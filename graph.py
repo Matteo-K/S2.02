@@ -52,7 +52,7 @@ def generate_mermaid(benchmark: bch.Benchmark, fields: dict[str, bool], criterio
     line_count = len(benchmark.result) * sum(fields.values())
     if line_count > 1:
         warn(
-            f'Warning: Mermaid XY charts currently offers no support for line labels. The graph will contain {line_count} lines only distinguished by color.')
+            f'Warning: Mermaid XY charts currently offer no support for line labels. The graph will contain {line_count} lines only distinguished by color.')
 
     if markdown_friendly:
         print('```mermaid')
