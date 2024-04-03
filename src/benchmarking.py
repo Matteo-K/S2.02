@@ -108,7 +108,7 @@ class BenchmarkResult:
 @dataclass(frozen=True)
 class Benchmark:
     min_n: int
-    result: dict[str, BenchmarkResult]
+    result: dict[str, list[BenchmarkResult]]
 
 
 def benchmark(n: int, solver: type, verbose_output: bool, strategy: BenchmarkingStrategy) -> BenchmarkResult:
